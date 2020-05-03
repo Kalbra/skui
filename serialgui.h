@@ -4,8 +4,6 @@
 #include <QMainWindow>
 #include <vector>
 
-extern int currentbutton;
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Serialgui; }
@@ -16,6 +14,7 @@ struct ButtonElement{
     int mode;
     QString send;
 };
+
 
 extern std::vector <ButtonElement> buttons;
 
@@ -28,9 +27,13 @@ public:
     ~Serialgui();
 
 private slots:
-    void on_pushButton_clicked();
-
     void on_add_clicked();
+
+    void on_delete_2_clicked();
+
+    void on_load_clicked();
+
+    void on_save_clicked();
 
 private:
     Ui::Serialgui *ui;

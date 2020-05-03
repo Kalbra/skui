@@ -40,6 +40,8 @@ else()
     serialgui.cpp
     serialgui.h
     serialgui.ui
+    saveengine.cpp
+    saveengine.h
     buttonsettings.cpp
     buttonsettings.h
     buttonsettings.ui

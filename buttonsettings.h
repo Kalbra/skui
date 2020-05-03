@@ -15,6 +15,7 @@ public:
     explicit ButtonSettings(QWidget *parent = nullptr);
     ~ButtonSettings();
     bool pushback;
+    int currentbutton;
 
 private slots:
     void on_mode_currentIndexChanged(const QString &arg1);

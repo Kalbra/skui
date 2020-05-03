@@ -68,9 +68,13 @@ void ButtonSettings::on_enter_clicked()
 
     }
 
-    buttons.push_back(button);
+    if(pushback){
+        buttons.push_back(button);
+    }
+    else{
+        buttons[currentbutton] = button;
+    }
 
-    qDebug() << pushback;
 
     close();
 }
