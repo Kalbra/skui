@@ -14,12 +14,6 @@ class ButtonSettings : public QDialog
 public:
     explicit ButtonSettings(QWidget *parent = nullptr);
     ~ButtonSettings();
-    bool pushback;
-
-private slots:
-    void on_mode_currentIndexChanged(const QString &arg1);
-
-    void on_enter_clicked();
 
 private:
     Ui::ButtonSettings *ui;

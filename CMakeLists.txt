@@ -34,11 +34,15 @@ if(ANDROID)
     serialgui.ui
   )
 else()
+
   add_executable(serialgui
     main.cpp
     serialgui.cpp
     serialgui.h
     serialgui.ui
+    buttonsettings.cpp
+    buttonsettings.h
+    buttonsettings.ui
   )
 endif()
 
