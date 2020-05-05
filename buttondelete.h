@@ -15,6 +15,9 @@ public:
     explicit buttondelete(QWidget *parent = nullptr);
     ~buttondelete();
 
+private slots:
+    void on_enter_clicked();
+
 private:
     Ui::buttondelete *ui;
 };

@@ -2,6 +2,7 @@
 #include "./ui_serialgui.h"
 #include "buttonsettings.h"
 #include "saveengine.h"
+#include "buttondelete.h"
 #include "serial.h"
 #include <vector>
 #include <QtCore>
@@ -32,7 +33,9 @@ void Serialgui::on_add_clicked()
 }
 
 void Serialgui::on_delete_2_clicked(){
-    qDebug() << "something";
+    buttondelete buttondelete;
+    buttondelete.setModal(true);
+    buttondelete.exec();
     updateViewengine();
 }
 
@@ -64,7 +67,6 @@ void Serialgui::updateViewengine(){
         QPushButton *button = new QPushButton(ui->engineinsert);
         button->setText(buttons[i].name);
         button->setGeometry(buttonx, buttony, 100, 100);
-
 
 
         connect(button, &QPushButton::clicked, this, [=]{ GetEvent(i); });

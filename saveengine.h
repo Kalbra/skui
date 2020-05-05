@@ -6,9 +6,9 @@
 #include <vector>
 
 
-void LoadButtonsfromFile(QString path);
+void LoadButtonsfromFile(QString path);                               //Lädt aus der Datei in den Array(buttons)
 
-void SaveButtonsToFile(QString path);
+void SaveButtonsToFile(QString path);                                 //Funktion um den Button Array erst zu jsonifizieren und dann in die Datei schreiben
 
 
 
