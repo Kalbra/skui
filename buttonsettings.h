@@ -20,6 +20,7 @@ public:
 private slots:
     void on_mode_currentIndexChanged(const QString &arg1);
 
+public slots:
     void on_enter_clicked();
 
 private:

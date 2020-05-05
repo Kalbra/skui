@@ -61,7 +61,11 @@
      </layout>
     </item>
     <item row="1" column="0">
-     <layout class="QGridLayout" name="viewenginegrid" rowstretch="3"/>
+     <layout class="QGridLayout" name="viewenginegrid" rowstretch="3">
+      <item row="0" column="0">
+       <widget class="QWidget" name="engineinsert" native="true"/>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>

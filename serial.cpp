@@ -1,6 +1,7 @@
 #include "serial.h"
+#include <QtCore>
 
-serial::serial()
-{
 
+void Serial::GetEvent(){
+    qDebug() << "hdsjfds";
 }

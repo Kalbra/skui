@@ -2,18 +2,19 @@
 #include "./ui_serialgui.h"
 #include "buttonsettings.h"
 #include "saveengine.h"
+#include "serial.h"
 #include <vector>
 #include <QtCore>
 #include <QJsonDocument>
 
 std::vector <ButtonElement> buttons;
 
-
 Serialgui::Serialgui(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::Serialgui)
 {
     ui->setupUi(this);
+
 }
 
 Serialgui::~Serialgui()
@@ -27,22 +28,73 @@ void Serialgui::on_add_clicked()
     buttonsettings.pushback = true;
     buttonsettings.setModal(true);
     buttonsettings.exec();
+    updateViewengine();
 }
 
-void Serialgui::on_delete_2_clicked()
-{
+void Serialgui::on_delete_2_clicked(){
+    qDebug() << "something";
+    updateViewengine();
+}
+
+void Serialgui::on_load_clicked(){
+
+    LoadButtonsfromFile("../serialgui/save.json");
+    updateViewengine();
+}
+
+void Serialgui::on_save_clicked(){
+
+    SaveButtonsToFile("../serialgui/save.json");
+}
+
+void Serialgui::updateViewengine(){
+    int buttonx = 0;
+    int buttony = 0;
+    int windowwidth = width();
+
+    qDeleteAll(ui->engineinsert->children());
+
+
     for(int i = 0; i < buttons.size(); i++){
-        qDebug() << buttons[i].mode;
-        qDebug() << buttons[i].send;
+        if((windowwidth - buttonx) < 100){
+            buttonx = 0;
+            buttony = buttony + 100;
+        }
+
+        QPushButton *button = new QPushButton(ui->engineinsert);
+        button->setText(buttons[i].name);
+        button->setGeometry(buttonx, buttony, 100, 100);
+
+
+
+        connect(button, &QPushButton::clicked, this, [=]{ GetEvent(i); });
+        button->show();
+
+        buttonx = buttonx + 100;
     }
 }
 
-void Serialgui::on_load_clicked()
+void Serialgui::resizeEvent(QResizeEvent* event)
 {
-    LoadButtonsfromFile("../serialgui/save.json");
+   QMainWindow::resizeEvent(event);
+   updateViewengine();
 }
 
-void Serialgui::on_save_clicked()
-{
-    SaveButtonsToFile("../serialgui/save.json");
+void Serialgui::GetEvent(int id){
+    qDebug() << buttons[id].send;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

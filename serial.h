@@ -1,11 +1,15 @@
 #ifndef SERIAL_H
 #define SERIAL_H
+#include <QtCore>
 
-
-class serial
+class Serial : public QObject
 {
-public:
-    serial();
+    Q_OBJECT
+
+    public slots:
+        void GetEvent();
+
+
 };
 
 #endif // SERIAL_H

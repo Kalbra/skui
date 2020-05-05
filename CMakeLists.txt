@@ -45,6 +45,8 @@ else()
     buttonsettings.cpp
     buttonsettings.h
     buttonsettings.ui
+    serial.cpp
+    serial.h
   )
 endif()
 

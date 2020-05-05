@@ -57,6 +57,7 @@ void ButtonSettings::on_enter_clicked()
 
     if(mode == 0){
         button.send = ui->button_input->text();
+        button.name = ui->button_input2->text();
     }
     else if(mode == 1){
 
@@ -75,6 +76,6 @@ void ButtonSettings::on_enter_clicked()
         buttons[currentbutton] = button;
     }
 
-
     close();
+
 }

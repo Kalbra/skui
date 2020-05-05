@@ -2,6 +2,8 @@
 #define SERIALGUI_H
 
 #include <QMainWindow>
+#include <QtCore>
+#include <QPushButton>
 #include <vector>
 
 
@@ -13,6 +15,7 @@ QT_END_NAMESPACE
 struct ButtonElement{
     int mode;
     QString send;
+    QString name;
 };
 
 
@@ -26,6 +29,8 @@ public:
     Serialgui(QWidget *parent = nullptr);
     ~Serialgui();
 
+    void updateViewengine();
+
 private slots:
     void on_add_clicked();
 
@@ -35,7 +40,15 @@ private slots:
 
     void on_save_clicked();
 
+    void resizeEvent(QResizeEvent* event);
+
+    void GetEvent(int id);
+
+
+
 private:
     Ui::Serialgui *ui;
+
+    QPushButton *button;
 };
 #endif // SERIALGUI_H

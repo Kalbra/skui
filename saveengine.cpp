@@ -41,7 +41,8 @@ void SaveButtonsToFile(QString path){
     for(int i = 0; i < buttons.size(); i++){
         QJsonObject model {
             {"mode", buttons[i].mode},
-            {"send", buttons[i].send}
+            {"send", buttons[i].send},
+            {"name", buttons[i].name}
         };
 
         buttonarray.append(model);
@@ -61,11 +62,13 @@ void LoadButtonsfromFile(QString path){
         QJsonObject button = buttonarray[i].toObject();
         QJsonValue mode = button.value("mode");
         QJsonValue send = button.value("send");
+        QJsonValue name = button.value("name");
 
         ButtonElement model;
 
         model.mode = mode.toInt();
         model.send = send.toString();
+        model.name = name.toString();
 
         buttons.push_back(model);
 
