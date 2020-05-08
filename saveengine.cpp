@@ -23,7 +23,7 @@ QJsonDocument FileToJson(QString path){                               //Funktion
 void JsonToFile(QString path, QString json){                          //Funktion um einen Jsonstring in eine Datei zu speichern
     QFile file(path);                                                 //Definiert die Datei
 
-    if(!file.open(QIODevice::ReadOnly)){}                             //Error, aber noch kein Inhalt
+    if(!file.open(QIODevice::WriteOnly)){}                            //Error, aber noch kein Inhalt
 
     QTextStream outstream(&file);                                     //Definiert den TextStream
 

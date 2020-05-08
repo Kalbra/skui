@@ -24,7 +24,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Widgets SerialPort REQUIRED)
+
+
 
 if(ANDROID)
   add_library(serialgui SHARED
@@ -50,7 +52,12 @@ else()
     buttondelete.cpp
     buttondelete.h
     buttondelete.ui
+    variabledefine.h
   )
 endif()
 
-target_link_libraries(serialgui PRIVATE Qt5::Widgets)
+target_link_libraries(serialgui PRIVATE
+    Qt5::Widgets
+    Qt5::SerialPort
+
+)

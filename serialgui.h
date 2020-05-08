@@ -44,7 +44,10 @@ private slots:
 
     void GetEvent(int id);
 
+    void on_zoom_valueChanged(int value);
 
+
+    void on_percent_editingFinished();
 
 private:
     Ui::Serialgui *ui;

@@ -6,97 +6,104 @@
 #include "serial.h"
 #include <vector>
 #include <QtCore>
+#include <QSlider>
 #include <QJsonDocument>
+#include <QValidator>
 
-std::vector <ButtonElement> buttons;
+std::vector <ButtonElement> buttons;                                  //Setzt buttons
 
-Serialgui::Serialgui(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::Serialgui)
+//      VIEWENGINE
+int     VIEWENGINE_BUTTON_SCALE = 100;                                //Setzt die Standartgröße der Buttons
+
+//      SAVEENGINE
+QString SAVEENGINE_STD_FILE     = "../serialgui/save.json";           //Setzt die standard save und load datei
+
+Serialgui::Serialgui(QWidget *parent)                                 //Qt kram
+    : QMainWindow(parent)                                             //Qt kram
+    , ui(new Ui::Serialgui)                                           //Qt kram
 {
-    ui->setupUi(this);
-
+    ui->setupUi(this);                                                //Qt kram
+    ui->percent->setValidator( new QIntValidator(0, 200, this));      //Sagt, dass man in percent(Prozentanzeige oben im Menü) nur Zahlen zwischen 0 und 200 schreiben kann
 }
 
-Serialgui::~Serialgui()
+Serialgui::~Serialgui()                                               //Qt kram
 {
-    delete ui;
+    delete ui;                                                        //Qt kram
 }
 
-void Serialgui::on_add_clicked()
+void Serialgui::on_add_clicked()                                      //Wenn add geclickt, dann wird ein neuer Button in den Array geschrieben
 {
-    ButtonSettings buttonsettings;
-    buttonsettings.pushback = true;
-    buttonsettings.setModal(true);
-    buttonsettings.exec();
-    updateViewengine();
+    ButtonSettings buttonsettings;                                    //Definiert das Model welches ein neues Fenster öffnet
+    buttonsettings.pushback = true;                                   //Sagt, dass Pushback = true, so wird nicht der jetzige Button bearbeitet, sondern es wird ein neuer erstellt
+    buttonsettings.setModal(true);                                    //Sagt, dass erst das Form ausgefüllt werden muss und dann erst im MainWindow weitergearbeitet werden kann
+    buttonsettings.exec();                                            //Führt Buttonsettings nun aus
+    updateViewengine();                                               //Updatet die Viewengine(wird erst ausgeführt, wenn buttonsettings geschlossen ist)
 }
 
-void Serialgui::on_delete_2_clicked(){
-    buttondelete buttondelete;
-    buttondelete.setModal(true);
-    buttondelete.exec();
-    updateViewengine();
+void Serialgui::on_delete_2_clicked(){                                //Löscht einen Button anhand des Namen
+    buttondelete buttondelete;                                        //Definiert das Model welches ein neues Fenster öffnet
+    buttondelete.setModal(true);                                      //Sagt, dass erst das Form ausgefüllt werden muss und dann erst im MainWindow weitergearbeitet werden kann
+    buttondelete.exec();                                              //Führt Buttondelete nun aus
+    updateViewengine();                                               //Updatet die Viewengine(wird erst ausgeführt, wenn buttonsettings geschlossen ist)
 }
 
-void Serialgui::on_load_clicked(){
+void Serialgui::on_load_clicked(){                                    //Lädt aus die Standarddatei
 
-    LoadButtonsfromFile("../serialgui/save.json");
-    updateViewengine();
+    LoadButtonsfromFile(SAVEENGINE_STD_FILE);                         //Führt LoadButtonsfromFile aus, dort passiert die eigentliche Magie
+    updateViewengine();                                               //Updatet die Viewengine
 }
 
-void Serialgui::on_save_clicked(){
+void Serialgui::on_save_clicked(){                                    //Speichert in die Standarddatei
 
-    SaveButtonsToFile("../serialgui/save.json");
+    SaveButtonsToFile(SAVEENGINE_STD_FILE);                           //Führt SaveButtonsToFile aus, dort passiert die eigentliche Magie
 }
 
-void Serialgui::updateViewengine(){
-    int buttonx = 0;
-    int buttony = 0;
-    int windowwidth = width();
+void Serialgui::updateViewengine(){                                   //Erstellt bzw. updatet die Viewengine, eigentlich ist sie die Viewengine
+    int buttonx = 0;                                                  //Erstellt buttonx dort wird die X position für den Button gespeichert
+    int buttony = 0;                                                  //Erstellt buttony dort wird die Y position für den Button gespeichert
+    int windowwidth = width();                                        //Speichert die Window breite
 
-    qDeleteAll(ui->engineinsert->children());
+    qDeleteAll(ui->engineinsert->children());                         //Cleart das Widget in dem die Buttons plaziert werden
 
 
-    for(int i = 0; i < buttons.size(); i++){
-        if((windowwidth - buttonx) < 100){
-            buttonx = 0;
-            buttony = buttony + 100;
+    for(int i = 0; i < buttons.size(); i++){                          //For Schleife um den Array(buttons) in einzelenen Elementen zu haben
+        if((windowwidth - buttonx) < VIEWENGINE_BUTTON_SCALE){        //Wenn der Platz nicht für noch einen Button recht
+            buttonx = 0;                                              //Setzt buttonx auf 0, also zum linken Displayrand
+            buttony = buttony + VIEWENGINE_BUTTON_SCALE;              //Geht eine Y Stufe nach unten
         }
 
-        QPushButton *button = new QPushButton(ui->engineinsert);
-        button->setText(buttons[i].name);
-        button->setGeometry(buttonx, buttony, 100, 100);
+        QPushButton *button = new QPushButton(ui->engineinsert);      //Erstellt einen neuen Button in engineinsert
+        button->setText(buttons[i].name);                             //Setzt den Namen des Button aus dem Array
+        button->setGeometry(buttonx, buttony, VIEWENGINE_BUTTON_SCALE, VIEWENGINE_BUTTON_SCALE);  //Setzt die Koordinaten und die größe des Button
 
 
-        connect(button, &QPushButton::clicked, this, [=]{ GetEvent(i); });
-        button->show();
+        connect(button, &QPushButton::clicked, this, [=]{ GetEvent(i); });  //Connectet den Button mit GetEvent mit dem Argument i also die jetzige Button ID
+        button->show();                                               //Bringt den Button aus den Display
 
-        buttonx = buttonx + 100;
+        buttonx = buttonx + VIEWENGINE_BUTTON_SCALE;                  //Erhöht buttonx um eine Buttongröße
     }
 }
 
-void Serialgui::resizeEvent(QResizeEvent* event)
+void Serialgui::resizeEvent(QResizeEvent* event)                      //Wenn die Windowgröße geändert wird, dann wird die Viewengine upgedatet
 {
-   QMainWindow::resizeEvent(event);
-   updateViewengine();
+   QMainWindow::resizeEvent(event);                                   //Definiert das Event
+   updateViewengine();                                                //Updatet die Viewengine
 }
 
 void Serialgui::GetEvent(int id){
     qDebug() << buttons[id].send;
 }
 
+void Serialgui::on_zoom_valueChanged(int value)                       //Wenn die Slidervalue geändert wird(Slider in der Toolbar oben neben dem delete Button)
+{
+    VIEWENGINE_BUTTON_SCALE = value;                                  //Setzt Buttonscale auf den Wert von value
+    ui->percent->setText(QString::number(value)+"%");                 //Zeigt die Buttongröße in percent(Neben dem Slider rechts)
+    updateViewengine();                                               //Updatet die Viewengine
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+void Serialgui::on_percent_editingFinished()                          //Wenn ein eingabe von percent(neben dem Slider) fertig ist, damm soll der Slider gesetzt werden und die Buttongröße
+{
+    int value = ui->percent->text().toInt();                          //Holt die value aus dem percent Textentry
+    VIEWENGINE_BUTTON_SCALE = value;                                  //Setz die Buttonscale auf die value
+    ui->zoom->setValue(value);                                        //Setzt den Slider an die richtige Position
+}
