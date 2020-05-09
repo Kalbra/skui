@@ -99,6 +99,7 @@ void Serialgui::updateViewengine(){                                   //Erstellt
             QDial *dial = new QDial(ui->engineinsert);
             dial->setGeometry(buttonx, buttony, VIEWENGINE_BUTTON_SCALE, VIEWENGINE_BUTTON_SCALE);  //Setzt die Koordinaten und die größe des Button
             dial->setRange(buttons[i].from, buttons[i].to);
+
             QLabel *name = new QLabel(dial);
             name->setText(buttons[i].name);
 
