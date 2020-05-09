@@ -13,9 +13,11 @@ QT_END_NAMESPACE
 
 
 struct ButtonElement{
-    int mode;
-    QString send;
-    QString name;
+    int mode     = 0;
+    QString send = "";
+    QString name = "";
+    int from     = 0;
+    int to       = 0;
 };
 
 
@@ -42,7 +44,9 @@ private slots:
 
     void resizeEvent(QResizeEvent* event);
 
-    void GetEvent(int id);
+    void GetButtonEvent(int id);
+
+    void GetDialEvent(int value);
 
     void on_zoom_valueChanged(int value);
 
