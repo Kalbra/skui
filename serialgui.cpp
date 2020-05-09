@@ -11,6 +11,8 @@
 #include <QJsonDocument>
 #include <QValidator>
 #include <QFileDialog>
+#include <QDial>
+#include <QLabel>
 
 std::vector <ButtonElement> buttons;                                  //Setzt buttons
 
@@ -83,13 +85,28 @@ void Serialgui::updateViewengine(){                                   //Erstellt
             buttony = buttony + VIEWENGINE_BUTTON_SCALE;              //Geht eine Y Stufe nach unten
         }
 
-        QPushButton *button = new QPushButton(ui->engineinsert);      //Erstellt einen neuen Button in engineinsert
-        button->setText(buttons[i].name);                             //Setzt den Namen des Button aus dem Array
-        button->setGeometry(buttonx, buttony, VIEWENGINE_BUTTON_SCALE, VIEWENGINE_BUTTON_SCALE);  //Setzt die Koordinaten und die größe des Button
+        if(buttons[i].mode == 0){
+            QPushButton *button = new QPushButton(ui->engineinsert);      //Erstellt einen neuen Button in engineinsert
+            button->setText(buttons[i].name);                             //Setzt den Namen des Button aus dem Array
+            button->setGeometry(buttonx, buttony, VIEWENGINE_BUTTON_SCALE, VIEWENGINE_BUTTON_SCALE);  //Setzt die Koordinaten und die größe des Button
 
 
-        connect(button, &QPushButton::clicked, this, [=]{ GetEvent(i); });  //Connectet den Button mit GetEvent mit dem Argument i also die jetzige Button ID
-        button->show();                                               //Bringt den Button aus den Display
+            connect(button, &QPushButton::clicked, this, [=]{ GetButtonEvent(i); });  //Connectet den Button mit GetEvent mit dem Argument i also die jetzige Button ID
+            button->show();                                               //Bringt den Button aus den Display
+        }
+
+        else if(buttons[i].mode == 2){
+            QDial *dial = new QDial(ui->engineinsert);
+            dial->setGeometry(buttonx, buttony, VIEWENGINE_BUTTON_SCALE, VIEWENGINE_BUTTON_SCALE);  //Setzt die Koordinaten und die größe des Button
+            dial->setRange(buttons[i].from, buttons[i].to);
+            QLabel *name = new QLabel(dial);
+            name->setText(buttons[i].name);
+
+
+            connect(dial, &QAbstractSlider::sliderMoved, this, [=] {GetDialEvent(dial->value());});
+            dial->show();
+            name->show();
+        }
 
         buttonx = buttonx + VIEWENGINE_BUTTON_SCALE;                  //Erhöht buttonx um eine Buttongröße
     }
@@ -101,8 +118,12 @@ void Serialgui::resizeEvent(QResizeEvent* event)                      //Wenn die
    updateViewengine();                                                //Updatet die Viewengine
 }
 
-void Serialgui::GetEvent(int id){
+void Serialgui::GetButtonEvent(int id){
     serial.WriteToSerial(&settings, buttons[id].send);
+}
+
+void Serialgui::GetDialEvent(int value){
+    serial.WriteToSerial(&settings, QString::number(value));
 }
 
 void Serialgui::on_zoom_valueChanged(int value)                       //Wenn die Slidervalue geändert wird(Slider in der Toolbar oben neben dem delete Button)
@@ -126,6 +147,12 @@ void Serialgui::updateavailableports(){
 
     for(int i = 0; i < serialinfolist.count(); i++){
         ui->availableports->addItem(serialinfolist[i].portName());
+    }
+    if(serialinfolist.count() == 0){
+        ui->engineinsert->setEnabled(false);
+    }
+    else{
+        ui->engineinsert->setEnabled(true);
     }
 }
 

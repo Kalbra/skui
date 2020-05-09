@@ -20,4 +20,5 @@ void Serial::WriteToSerial(Generalsettings *settings, QString data){
     serial.open(QIODevice::ReadWrite);
 
     serial.write(data.toUtf8());
+    qDebug() << "Virtual Serial on" << settings->PORT_NAME << settings->BAUD_RADE << " ::  " << data;
 }

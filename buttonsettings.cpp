@@ -63,7 +63,9 @@ void ButtonSettings::on_enter_clicked()
 
     }
     else if(mode == 2){
-
+        button.from = ui->dial_from->text().toInt();
+        button.to   = ui->dial_to  ->text().toInt();
+        button.name = ui->dial_input->text();
     }
     else if(mode == 3){
 
