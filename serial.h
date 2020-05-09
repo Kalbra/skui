@@ -2,21 +2,16 @@
 #define SERIAL_H
 #include <QtCore>
 #include <QtSerialPort/QSerialPortInfo>
+#include "generalsettings.h"
 
 
 class Serial : public QObject
 {
     Q_OBJECT
 
-    int baudrade;
-    QString portname;
-
-
 public:
-    void WriteToSerial(QString data);
+    void WriteToSerial(Generalsettings *settings, QString data);
     QList<QSerialPortInfo> FindPorts();
-
-
 };
 
 #endif // SERIAL_H

@@ -46,8 +46,13 @@ private slots:
 
     void on_zoom_valueChanged(int value);
 
-
     void on_percent_editingFinished();
+
+    void updateavailableports();
+
+    void on_availableports_currentIndexChanged(const QString &arg1);
+
+    void on_baudrate_valueChanged(int arg1);
 
 private:
     Ui::Serialgui *ui;

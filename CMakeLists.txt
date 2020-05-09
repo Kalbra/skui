@@ -52,7 +52,7 @@ else()
     buttondelete.cpp
     buttondelete.h
     buttondelete.ui
-    variabledefine.h
+    generalsettings.h
   )
 endif()
 

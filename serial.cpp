@@ -1,4 +1,5 @@
 #include "serial.h"
+#include "generalsettings.h"
 #include <QtCore>
 #include <QtSerialPort/QSerialPortInfo>
 #include <QtSerialPort/QSerialPort>
@@ -8,10 +9,10 @@ QList<QSerialPortInfo> Serial::FindPorts(){
 }
 
 
-void Serial::WriteToSerial(QString data){
+void Serial::WriteToSerial(Generalsettings *settings, QString data){
     QSerialPort serial;
-    serial.setPortName(portname);
-    serial.setBaudRate(baudrade);
+    serial.setPortName(settings->PORT_NAME);
+    serial.setBaudRate(settings->BAUD_RADE);
     serial.setDataBits(QSerialPort::Data8);
     serial.setParity(QSerialPort::NoParity);
     serial.setStopBits(QSerialPort::OneStop);

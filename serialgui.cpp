@@ -4,6 +4,7 @@
 #include "saveengine.h"
 #include "buttondelete.h"
 #include "serial.h"
+#include "generalsettings.h"
 #include <vector>
 #include <QtCore>
 #include <QSlider>
@@ -18,12 +19,23 @@ int     VIEWENGINE_BUTTON_SCALE = 100;                                //Setzt di
 //      SAVEENGINE
 QString SAVEENGINE_STD_FILE     = "../serialgui/save.json";           //Setzt die standard save und load datei
 
+Generalsettings settings;
+
+Serial serial;
+
 Serialgui::Serialgui(QWidget *parent)                                 //Qt kram
     : QMainWindow(parent)                                             //Qt kram
     , ui(new Ui::Serialgui)                                           //Qt kram
 {
     ui->setupUi(this);                                                //Qt kram
     ui->percent->setValidator( new QIntValidator(0, 200, this));      //Sagt, dass man in percent(Prozentanzeige oben im Menü) nur Zahlen zwischen 0 und 200 schreiben kann
+
+    QTimer *serialportupdatetime = new QTimer(this);
+    connect(serialportupdatetime, SIGNAL(timeout()), this, SLOT(updateavailableports()));
+    serialportupdatetime->start(1000);
+
+    settings.BAUD_RADE = 9600;
+
 }
 
 Serialgui::~Serialgui()                                               //Qt kram
@@ -91,7 +103,7 @@ void Serialgui::resizeEvent(QResizeEvent* event)                      //Wenn die
 }
 
 void Serialgui::GetEvent(int id){
-    qDebug() << buttons[id].send;
+    serial.WriteToSerial(&settings, buttons[id].send);
 }
 
 void Serialgui::on_zoom_valueChanged(int value)                       //Wenn die Slidervalue geändert wird(Slider in der Toolbar oben neben dem delete Button)
@@ -106,4 +118,25 @@ void Serialgui::on_percent_editingFinished()                          //Wenn ein
     int value = ui->percent->text().toInt();                          //Holt die value aus dem percent Textentry
     VIEWENGINE_BUTTON_SCALE = value;                                  //Setz die Buttonscale auf die value
     ui->zoom->setValue(value);                                        //Setzt den Slider an die richtige Position
+}
+
+void Serialgui::updateavailableports(){
+    QList<QSerialPortInfo> serialinfolist = serial.FindPorts();
+
+    ui->availableports->clear();
+
+    for(int i = 0; i < serialinfolist.count(); i++){
+        ui->availableports->addItem(serialinfolist[i].portName());
+    }
+
+}
+
+void Serialgui::on_availableports_currentIndexChanged(const QString &arg1)
+{
+    settings.PORT_NAME = arg1;
+}
+
+void Serialgui::on_baudrate_valueChanged(int arg1)
+{
+    settings.BAUD_RADE = arg1;
 }

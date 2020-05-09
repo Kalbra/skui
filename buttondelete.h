@@ -18,6 +18,8 @@ public:
 private slots:
     void on_enter_clicked();
 
+    void on_deleteall_stateChanged(int arg1);
+
 private:
     Ui::buttondelete *ui;
 };
