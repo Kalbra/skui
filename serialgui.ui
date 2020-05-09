@@ -25,6 +25,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QToolButton" name="loadotherfile">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="save">
         <property name="text">
          <string>Save</string>

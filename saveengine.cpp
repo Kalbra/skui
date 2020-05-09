@@ -54,6 +54,8 @@ void LoadButtonsfromFile(QString path){                               //Lädt au
     QJsonDocument json        = FileToJson(path);                     //Holt aus der Datei das Jsondocument durch FileToJson
     QJsonArray    buttonarray = json.array();                         //Konvertiert das Jsondocument in einen Jsonarray
 
+    buttons.clear();                                                  //Claert den Buttonarray um vertoppelungen zu verhindern
+
     for(int i = 0; i < buttonarray.size(); i++){                      //For Schleife um den Jsonarray in einzelenen Elementen zu haben
         QJsonObject button = buttonarray[i].toObject();               //Konvertiert den jetzigen Array in ein Object
         QJsonValue mode = button.value("mode");                       //Extrahiert den Mode und schreibt ihn in eine JsonValue variable

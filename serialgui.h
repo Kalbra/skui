@@ -54,6 +54,8 @@ private slots:
 
     void on_baudrate_valueChanged(int arg1);
 
+    void on_loadotherfile_clicked();
+
 private:
     Ui::Serialgui *ui;
 

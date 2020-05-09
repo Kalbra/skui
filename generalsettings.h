@@ -7,6 +7,8 @@ class Generalsettings
 public:
     int     BAUD_RADE;
     QString PORT_NAME;
+
+    QString FILE_PATH;
 };
 
 #endif // GENERALSETTINGS_H

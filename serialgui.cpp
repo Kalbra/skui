@@ -10,14 +10,12 @@
 #include <QSlider>
 #include <QJsonDocument>
 #include <QValidator>
+#include <QFileDialog>
 
 std::vector <ButtonElement> buttons;                                  //Setzt buttons
 
 //      VIEWENGINE
 int     VIEWENGINE_BUTTON_SCALE = 100;                                //Setzt die Standartgröße der Buttons
-
-//      SAVEENGINE
-QString SAVEENGINE_STD_FILE     = "../serialgui/save.json";           //Setzt die standard save und load datei
 
 Generalsettings settings;
 
@@ -35,6 +33,7 @@ Serialgui::Serialgui(QWidget *parent)                                 //Qt kram
     serialportupdatetime->start(1000);
 
     settings.BAUD_RADE = 9600;
+    settings.FILE_PATH = "../serialgui/save.json";
 
 }
 
@@ -60,14 +59,14 @@ void Serialgui::on_delete_2_clicked(){                                //Löscht 
 }
 
 void Serialgui::on_load_clicked(){                                    //Lädt aus die Standarddatei
+        LoadButtonsfromFile(settings.FILE_PATH);                      //Führt LoadButtonsfromFile aus, dort passiert die eigentliche Magie
+        updateViewengine();                                           //Updatet die Viewengine
 
-    LoadButtonsfromFile(SAVEENGINE_STD_FILE);                         //Führt LoadButtonsfromFile aus, dort passiert die eigentliche Magie
-    updateViewengine();                                               //Updatet die Viewengine
 }
 
 void Serialgui::on_save_clicked(){                                    //Speichert in die Standarddatei
 
-    SaveButtonsToFile(SAVEENGINE_STD_FILE);                           //Führt SaveButtonsToFile aus, dort passiert die eigentliche Magie
+    SaveButtonsToFile(settings.FILE_PATH);                            //Führt SaveButtonsToFile aus, dort passiert die eigentliche Magie
 }
 
 void Serialgui::updateViewengine(){                                   //Erstellt bzw. updatet die Viewengine, eigentlich ist sie die Viewengine
@@ -128,7 +127,6 @@ void Serialgui::updateavailableports(){
     for(int i = 0; i < serialinfolist.count(); i++){
         ui->availableports->addItem(serialinfolist[i].portName());
     }
-
 }
 
 void Serialgui::on_availableports_currentIndexChanged(const QString &arg1)
@@ -139,4 +137,14 @@ void Serialgui::on_availableports_currentIndexChanged(const QString &arg1)
 void Serialgui::on_baudrate_valueChanged(int arg1)
 {
     settings.BAUD_RADE = arg1;
+}
+
+void Serialgui::on_loadotherfile_clicked()
+{
+    QString fileurl = QFileDialog::getOpenFileName(this, "Open Skui file", "/", "All File (*.*) ;; Skui File (*.skui) ;; Json File (*.json)");
+    if(!(fileurl == "")){
+        settings.FILE_PATH = fileurl;
+        on_load_clicked();
+
+    }
 }
