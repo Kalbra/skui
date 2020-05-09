@@ -6,33 +6,57 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>685</width>
-    <height>376</height>
+    <width>721</width>
+    <height>403</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
-   <string>Serialgui</string>
+   <string notr="true">Skui</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="Germany"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="0">
+     <layout class="QGridLayout" name="viewenginegrid" rowstretch="3">
+      <item row="0" column="0">
+       <widget class="QWidget" name="engineinsert" native="true"/>
+      </item>
+     </layout>
+    </item>
     <item row="0" column="0">
      <layout class="QHBoxLayout" name="controlbargrid">
+      <property name="spacing">
+       <number>2</number>
+      </property>
       <item>
        <widget class="QPushButton" name="load">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>Load</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="loadotherfile">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="save">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>Save</string>
         </property>
@@ -40,6 +64,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="add">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>Add</string>
         </property>
@@ -47,6 +77,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="delete_2">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="text">
          <string>Delete</string>
         </property>
@@ -59,7 +95,7 @@
        <widget class="QSpinBox" name="baudrate">
         <property name="minimumSize">
          <size>
-          <width>120</width>
+          <width>80</width>
           <height>0</height>
          </size>
         </property>
@@ -107,9 +143,15 @@
         <property name="enabled">
          <bool>true</bool>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
-          <width>70</width>
+          <width>40</width>
           <height>16777215</height>
          </size>
         </property>
@@ -126,13 +168,6 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="0">
-     <layout class="QGridLayout" name="viewenginegrid" rowstretch="3">
-      <item row="0" column="0">
-       <widget class="QWidget" name="engineinsert" native="true"/>
-      </item>
-     </layout>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -140,12 +175,55 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>685</width>
+     <width>721</width>
      <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_As"/>
+    <addaction name="separator"/>
+    <addaction name="actionLoad"/>
+    <addaction name="actionLoad_From"/>
+   </widget>
+   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="text">
+    <string>Save As</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionLoad">
+   <property name="text">
+    <string>Load</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionLoad_From">
+   <property name="text">
+    <string>Load From</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+L</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

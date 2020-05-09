@@ -37,6 +37,8 @@ Serialgui::Serialgui(QWidget *parent)                                 //Qt kram
     settings.BAUD_RADE = 9600;
     settings.FILE_PATH = "../serialgui/save.json";
 
+    connect(ui->actionSave_As, &QAction::triggered, this, &Serialgui::saveas);
+
 }
 
 Serialgui::~Serialgui()                                               //Qt kram
@@ -86,13 +88,13 @@ void Serialgui::updateViewengine(){                                   //Erstellt
         }
 
         if(buttons[i].mode == 0){
-            QPushButton *button = new QPushButton(ui->engineinsert);      //Erstellt einen neuen Button in engineinsert
-            button->setText(buttons[i].name);                             //Setzt den Namen des Button aus dem Array
+            QPushButton *button = new QPushButton(ui->engineinsert);  //Erstellt einen neuen Button in engineinsert
+            button->setText(buttons[i].name);                         //Setzt den Namen des Button aus dem Array
             button->setGeometry(buttonx, buttony, VIEWENGINE_BUTTON_SCALE, VIEWENGINE_BUTTON_SCALE);  //Setzt die Koordinaten und die größe des Button
 
 
             connect(button, &QPushButton::clicked, this, [=]{ GetButtonEvent(i); });  //Connectet den Button mit GetEvent mit dem Argument i also die jetzige Button ID
-            button->show();                                               //Bringt den Button aus den Display
+            button->show();                                           //Bringt den Button aus den Display
         }
 
         else if(buttons[i].mode == 2){
@@ -167,12 +169,20 @@ void Serialgui::on_baudrate_valueChanged(int arg1)
     settings.BAUD_RADE = arg1;
 }
 
-void Serialgui::on_loadotherfile_clicked()
+void Serialgui::loadfrom()
 {
     QString fileurl = QFileDialog::getOpenFileName(this, "Open Skui file", "/", "All File (*.*) ;; Skui File (*.skui) ;; Json File (*.json)");
     if(!(fileurl == "")){
         settings.FILE_PATH = fileurl;
         on_load_clicked();
+    }
+}
 
+void Serialgui::saveas()
+{
+    QString fileurl = QFileDialog::getSaveFileName(this, "Open Skui file", "/", "All File (*.*) ;; Skui File (*.skui) ;; Json File (*.json)");
+    if(!(fileurl == "")){
+        settings.FILE_PATH = fileurl;
+        on_save_clicked();
     }
 }
