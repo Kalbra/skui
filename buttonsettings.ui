@@ -26,45 +26,7 @@
    </item>
    <item row="1" column="0" colspan="2">
     <widget class="QWidget" name="settings" native="true">
-     <widget class="QWidget" name="textinput" native="true">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>18</width>
-        <height>33</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>t</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="slider" native="true">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>25</width>
-        <height>33</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>s</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="dial" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -75,7 +37,7 @@
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="1" column="1">
-        <widget class="QSpinBox" name="dial_to">
+        <widget class="QSpinBox" name="slider_to">
          <property name="minimum">
           <number>-10000</number>
          </property>
@@ -84,22 +46,32 @@
          </property>
         </widget>
        </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="slider_label3">
+         <property name="text">
+          <string>Name:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="slider_input"/>
+       </item>
        <item row="0" column="0">
-        <widget class="QLabel" name="dial_label2">
+        <widget class="QLabel" name="slider_label2">
          <property name="text">
           <string>From:</string>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="dial_label">
+        <widget class="QLabel" name="slider_label">
          <property name="text">
           <string>To:</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QSpinBox" name="dial_from">
+        <widget class="QSpinBox" name="slider_from">
          <property name="minimum">
           <number>-10000</number>
          </property>
@@ -108,13 +80,17 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="dial_input"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="dial_label3">
+       <item row="3" column="0">
+        <widget class="QRadioButton" name="vertical">
          <property name="text">
-          <string>Name:</string>
+          <string>Vetical</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QRadioButton" name="horizontal">
+         <property name="text">
+          <string>Horizontal</string>
          </property>
         </widget>
        </item>
@@ -129,7 +105,7 @@
         <x>0</x>
         <y>0</y>
         <width>394</width>
-        <height>231</height>
+        <height>201</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">

@@ -40,8 +40,9 @@ void SaveButtonsToFile(QString path){                                 //Funktion
             {"mode", buttons[i].mode},                                //Definiert den Mode als Json Element
             {"send", buttons[i].send},                                //Definiert den Send als Json Element
             {"name", buttons[i].name},                                //Definiert den Name als Json Element
-            {"to",     buttons[i].to},
-            {"from", buttons[i].from}
+            {"to",   buttons[i].to},
+            {"from", buttons[i].from},
+            {"hoz",  buttons[i].hoz}
         };
 
         buttonarray.append(model);                                    //Führt das Model(für einen Button) in den Buttonarray
@@ -65,6 +66,7 @@ void LoadButtonsfromFile(QString path){                               //Lädt au
         QJsonValue name = button.value("name");                       //Extrahiert den Name und schreibt ihn in eine JsonValue variable
         QJsonValue from = button.value("from");                       //Extrahiert den Name und schreibt ihn in eine JsonValue variable
         QJsonValue to   = button.value("to");                         //Extrahiert den Name und schreibt ihn in eine JsonValue variable
+        QJsonValue hoz  = button.value("hoz");                         //Extrahiert den Name und schreibt ihn in eine JsonValue variable
 
         ButtonElement model;                                          //Definert ein Buttonelement(Datentype für buttons)
 
@@ -73,6 +75,7 @@ void LoadButtonsfromFile(QString path){                               //Lädt au
         model.name = name.toString();                                 //Übergibt die Jsonvalue Mode in das Button Element
         model.from = from.toInt();
         model.to   = to  .toInt();
+        model.hoz  = hoz .toBool();
 
         buttons.push_back(model);                                     //Hängt hinten an buttons das Button Element an
 

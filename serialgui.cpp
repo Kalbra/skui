@@ -37,7 +37,11 @@ Serialgui::Serialgui(QWidget *parent)                                 //Qt kram
     settings.BAUD_RADE = 9600;
     settings.FILE_PATH = "../serialgui/save.json";
 
+    connect(ui->actionSave, &QAction::triggered, this, &Serialgui::on_save_clicked);
+    connect(ui->actionLoad, &QAction::triggered, this, &Serialgui::on_load_clicked);
+
     connect(ui->actionSave_As, &QAction::triggered, this, &Serialgui::saveas);
+    connect(ui->actionLoad_From, &QAction::triggered, this, &Serialgui::loadfrom);
 
 }
 
@@ -63,8 +67,8 @@ void Serialgui::on_delete_2_clicked(){                                //Löscht 
 }
 
 void Serialgui::on_load_clicked(){                                    //Lädt aus die Standarddatei
-        LoadButtonsfromFile(settings.FILE_PATH);                      //Führt LoadButtonsfromFile aus, dort passiert die eigentliche Magie
-        updateViewengine();                                           //Updatet die Viewengine
+    LoadButtonsfromFile(settings.FILE_PATH);                          //Führt LoadButtonsfromFile aus, dort passiert die eigentliche Magie
+    updateViewengine();                                               //Updatet die Viewengine
 
 }
 
@@ -97,6 +101,25 @@ void Serialgui::updateViewengine(){                                   //Erstellt
             button->show();                                           //Bringt den Button aus den Display
         }
 
+        else if(buttons[i].mode == 1){
+            if(buttons[i].hoz){
+                QSlider *slider = new QSlider(Qt::Horizontal, ui->engineinsert);
+            }
+            else{
+                QSlider *slider = new QSlider(Qt::Vertical, ui->engineinsert);
+            }
+
+            QSlider *slider = new QSlider(ui->engineinsert);
+            slider->setGeometry(buttonx, buttony, VIEWENGINE_BUTTON_SCALE, VIEWENGINE_BUTTON_SCALE);  //Setzt die Koordinaten und die größe des Button
+            slider->setRange(buttons[i].from, buttons[i].to);
+
+
+
+
+            connect(slider, &QAbstractSlider::sliderMoved, this, [=] {GetSliderEvent(slider->value());});
+            slider->show();
+        }
+
         else if(buttons[i].mode == 2){
             QDial *dial = new QDial(ui->engineinsert);
             dial->setGeometry(buttonx, buttony, VIEWENGINE_BUTTON_SCALE, VIEWENGINE_BUTTON_SCALE);  //Setzt die Koordinaten und die größe des Button
@@ -106,7 +129,7 @@ void Serialgui::updateViewengine(){                                   //Erstellt
             name->setText(buttons[i].name);
 
 
-            connect(dial, &QAbstractSlider::sliderMoved, this, [=] {GetDialEvent(dial->value());});
+            connect(dial, &QAbstractSlider::sliderMoved, this, [=] {GetSliderEvent(dial->value());});
             dial->show();
             name->show();
         }
@@ -125,7 +148,7 @@ void Serialgui::GetButtonEvent(int id){
     serial.WriteToSerial(&settings, buttons[id].send);
 }
 
-void Serialgui::GetDialEvent(int value){
+void Serialgui::GetSliderEvent(int value){
     serial.WriteToSerial(&settings, QString::number(value));
 }
 

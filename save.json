@@ -1,2 +1,26 @@
 [
+    {
+        "from": 0,
+        "hoz": true,
+        "mode": 1,
+        "name": "",
+        "send": "",
+        "to": 0
+    },
+    {
+        "from": 0,
+        "hoz": true,
+        "mode": 1,
+        "name": "",
+        "send": "",
+        "to": 0
+    },
+    {
+        "from": 0,
+        "hoz": true,
+        "mode": 1,
+        "name": "khl",
+        "send": "",
+        "to": 0
+    }
 ]

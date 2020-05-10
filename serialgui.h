@@ -18,6 +18,7 @@ struct ButtonElement{
     QString name = "";
     int from     = 0;
     int to       = 0;
+    bool hoz     = true;
 };
 
 
@@ -46,7 +47,7 @@ private slots:
 
     void GetButtonEvent(int id);
 
-    void GetDialEvent(int value);
+    void GetSliderEvent(int value);
 
     void on_zoom_valueChanged(int value);
 
