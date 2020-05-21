@@ -2,9 +2,10 @@
 #define SETTINGSTRUCT_H
 #include <QtCore>
 #include <vector>
+#include "../boardelements/boardelements.h"
 
 struct Settings{
-    std::vector<QString> openfiles;
+    std::vector<Button, Slider> *elements;
 };
 
 

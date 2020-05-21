@@ -37,11 +37,20 @@ if(ANDROID)
 else()
   add_executable(skui
     src/main.cpp
+
     src/core/mainwindow.cpp
     src/core/mainwindow.h
     src/core/mainwindow.ui
+
+    src/core/board.cpp
+    src/core/board.h
+
     src/fileio/fileio.h
+
     src/settings/settingstruct.h
+
+
+    src/boardelements/boardelements.h
   )
 endif()
 
