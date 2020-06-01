@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(skui LANGUAGES CXX)
+project(skui
+    VERSION 0.6
+    LANGUAGES CXX
+    DESCRIPTION "A open source serial interface"
+    )
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -11,57 +15,41 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# QtCreator supports the following variables for Android, which are identical to qmake Android variables.
-# Check http://doc.qt.io/qt-5/deployment-android.html for more information.
-# They need to be set before the find_package(Qt5 ...) call.
-
-#if(ANDROID)
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-#    if (ANDROID_ABI STREQUAL "armeabi-v7a")
-#        set(ANDROID_EXTRA_LIBS
-#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libcrypto.so
-#            ${CMAKE_CURRENT_SOURCE_DIR}/path/to/libssl.so)
-#    endif()
-#endif()
+#Cpack stuff
+set(CPACK_PACKAGE_DESCRIPTION "A open source serial interface")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CPACK_PACKAGE_DESCRIPTION_SUMMARY")
+set(CPACK_PACKAGE_HOMEPAGE_URL "https://kalbra.github.io/skui/")
 
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-if(ANDROID)
-  add_library(skui SHARED
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-  )
-else()
-  add_executable(skui
-    src/main.cpp
 
-    src/core/mainwindow.cpp
-    src/core/mainwindow.h
-    src/core/mainwindow.ui
+add_executable(skui
+  src/main.cpp
 
-    src/core/board.cpp
-    src/core/board.h
+  src/core/mainwindow.cpp
+  src/core/mainwindow.h
+  src/core/mainwindow.ui
 
-    src/fileio/fileio.h
-    src/fileio/fileio.cpp
+  src/core/board.cpp
+  src/core/board.h
 
-    src/filebar/filebar.cpp
-    src/filebar/filebar.h
+  src/fileio/fileio.h
+  src/fileio/fileio.cpp
 
-    src/saveengine/saveengine.cpp
-    src/saveengine/saveengine.h
+  src/filebar/filebar.cpp
+  src/filebar/filebar.h
 
-    src/fileio/filedialog.h
+  src/saveengine/saveengine.cpp
+  src/saveengine/saveengine.h
 
-    src/filenameengine/filenameengine.h
+  src/fileio/filedialog.h
 
-    src/settings/settingstruct.h
+  src/filenameengine/filenameengine.h
 
-    src/boardelements/boardelements.h
-  )
-endif()
+  src/settings/settingstruct.h
+
+  src/boardelements/boardelements.h
+)
 
 target_link_libraries(skui PRIVATE Qt5::Widgets)
