@@ -1,10 +1,19 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "../boardelements/boardelements.h"
+#include "board.h"
+#include "../filenameengine/filenameengine.h"
+#include "../filebar/filebar.h"
+#include "../fileio/filedialog.h"
+#include "../fileio/fileio.h"
 
 #include <QtCore>
 #include <QDockWidget>
 #include <vector>
+#include <QPushButton>
+
+Filenameengine filenameengine;
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,12 +21,39 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QDockWidget *test = new QDockWidget("Select Widget", this);
+    QStyle *style = qApp->style();
 
+    filebar = new Filebar();
+
+    connect(ui->actionNew, &QAction::triggered, this, &MainWindow::on_new_triggered);
+    connect(ui->actionButton, &QAction::triggered, this, &MainWindow::on_button_triggered);
+    connect(ui->actionSlider, &QAction::triggered, this, &MainWindow::on_slider_triggered);
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow(){
+    filenameengine.Savefilenames();
     delete ui;
 }
 
+void MainWindow::on_new_triggered(){
+    Board board;
+    board.setup();
+
+    QString url = OpenFileDialog(this);
+    filenameengine.Setnewfile(url);
+    board.setFile(filenameengine.currentboard);
+
+    ui->boards->addTab(board.getBoard(), filenameengine.currentboard);
+}
+
+void MainWindow::on_button_triggered(){
+
+}
+
+void MainWindow::on_slider_triggered(){
+
+}
+
+void MainWindow::on_boards_tabCloseRequested(int index){
+    ui->boards->removeTab(index);
+}

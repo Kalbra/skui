@@ -46,9 +46,19 @@ else()
     src/core/board.h
 
     src/fileio/fileio.h
+    src/fileio/fileio.cpp
+
+    src/filebar/filebar.cpp
+    src/filebar/filebar.h
+
+    src/saveengine/saveengine.cpp
+    src/saveengine/saveengine.h
+
+    src/fileio/filedialog.h
+
+    src/filenameengine/filenameengine.h
 
     src/settings/settingstruct.h
-
 
     src/boardelements/boardelements.h
   )

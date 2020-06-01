@@ -3,26 +3,25 @@
 #include <QtCore>
 #include <QMainWindow>
 
-#include "mainwindow.h"
+//#include "mainwindow.h"
+#include "../boardelements/boardelements.h"
 
 class Board
 {
-    Q_OBJECT
-
 public:
-    Board();
+
     void setup();
-
     void setFile(QString path);
-
     void update();
 
     QWidget *getBoard();
 
 private:
-    QString p_path = "content.json";
+    QString p_path = "files.json";
 
     QWidget *board;
+
+    std::vector<Buttonelement> event;
 };
 
 #endif // BOARD_H

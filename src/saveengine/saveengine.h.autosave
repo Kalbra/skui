@@ -1,0 +1,12 @@
+#ifndef SAVEENGINE_H
+#define SAVEENGINE_H
+#include <vector>
+#include "../boardelements/boardelements.h"
+
+class Saveengine
+{
+public:
+    std::vector<Boardelement> GetFromFile(QString path);
+};
+
+#endif // SAVEENGINE_H

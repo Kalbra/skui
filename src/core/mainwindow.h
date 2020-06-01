@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "../filebar/filebar.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -15,7 +17,22 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void LoadBoards();
+
+    void on_new_triggered();
+
+    void on_button_triggered();
+
+    void on_slider_triggered();
+
+private slots:
+    void on_boards_tabCloseRequested(int index);
+
 private:
     Ui::MainWindow *ui;
+
+    Filebar *filebar;
+
+
 };
 #endif // MAINWINDOW_H

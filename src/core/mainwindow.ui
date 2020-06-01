@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>891</width>
-    <height>613</height>
+    <height>550</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,14 @@
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QTabWidget" name="boards">
+      <property name="tabPosition">
+       <enum>QTabWidget::North</enum>
+      </property>
       <property name="currentIndex">
        <number>-1</number>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -33,8 +39,23 @@
      <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionOpen"/>
+   </widget>
+   <widget class="QMenu" name="menuInsert">
+    <property name="title">
+     <string>Insert</string>
+    </property>
+    <addaction name="actionButton"/>
+    <addaction name="actionSlider"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuInsert"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
@@ -46,6 +67,26 @@
     <bool>false</bool>
    </attribute>
   </widget>
+  <action name="actionNew">
+   <property name="text">
+    <string>New...</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open..</string>
+   </property>
+  </action>
+  <action name="actionButton">
+   <property name="text">
+    <string>Button</string>
+   </property>
+  </action>
+  <action name="actionSlider">
+   <property name="text">
+    <string>Slider</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

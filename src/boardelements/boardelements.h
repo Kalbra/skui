@@ -2,15 +2,26 @@
 #define BUTTON_H
 #include <QString>
 
-struct Button{
-  QString name;
-  QString action;
+class Boardelement
+{
+public:
+    QString name;
 };
 
-struct Slider{
-  QString name;
-  int from;
-  int to;
+
+class Button : public Boardelement
+{
+public:
+    QString action;
 };
+
+class Slider : public Boardelement
+{
+public:
+    int from;
+    int to;
+};
+
+
 
 #endif // BUTTON_H
