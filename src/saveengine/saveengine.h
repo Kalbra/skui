@@ -6,7 +6,7 @@
 class Saveengine
 {
 public:
-    std::vector<Buttonelement> GetFromFile(QString path);
+    std::vector<Boardelement> GetFromFile(QString path);              //Funktion um von einer Datei(Board Datei) in einen Vector(Boardelement) zu laden, dieser wird dann returnt.
 };
 
 #endif // SAVEENGINE_H

@@ -6,6 +6,7 @@ class Boardelement
 {
 public:
     QString name;
+    QString type;
 };
 
 

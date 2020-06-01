@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "../filebar/filebar.h"
+#include "board.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,6 +26,8 @@ public:
 
     void on_slider_triggered();
 
+    void resizeEvent(QResizeEvent*);
+
 private slots:
     void on_boards_tabCloseRequested(int index);
 
@@ -32,6 +35,8 @@ private:
     Ui::MainWindow *ui;
 
     Filebar *filebar;
+
+
 
 
 };

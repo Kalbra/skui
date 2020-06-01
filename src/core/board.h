@@ -21,7 +21,7 @@ private:
 
     QWidget *board;
 
-    std::vector<Buttonelement> event;
+    std::vector<Boardelement> boardelements;
 };
 
 #endif // BOARD_H

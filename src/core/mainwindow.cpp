@@ -14,6 +14,9 @@
 
 Filenameengine filenameengine;
 
+Board voidboard;
+Board *currentboard = &voidboard;
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -36,14 +39,23 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::on_new_triggered(){
-    Board board;
-    board.setup();
+    Board *board = new Board();
+    currentboard = board;
+
+    board->setup();
 
     QString url = OpenFileDialog(this);
     filenameengine.Setnewfile(url);
-    board.setFile(filenameengine.currentboard);
+    board->setFile(filenameengine.currentboard);
 
-    ui->boards->addTab(board.getBoard(), filenameengine.currentboard);
+    ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
+
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+   QMainWindow::resizeEvent(event);
+   currentboard->update();
 }
 
 void MainWindow::on_button_triggered(){

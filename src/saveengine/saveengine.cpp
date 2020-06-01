@@ -19,6 +19,7 @@ std::vector<Boardelement> Saveengine::GetFromFile(QString path){      //Funktion
         if(eventtype == "button"){                                    //Wenn der Eventtype gleich button ist
             Button button;                                            //Erstellt einen neuen Button
             button.name   = element.value("name")  .toString();       //Übergibt den Namen für den Button
+            button.type   = eventtype;                                 //Übergibt den Type für den Button
             button.action = element.value("action").toString();       //Übergibt die Aktion, die ausgeführt werden soll
 
             boardelements.push_back(button);                          //Hängt den Button an das Ende des Vectors(boardelements) an
@@ -26,6 +27,7 @@ std::vector<Boardelement> Saveengine::GetFromFile(QString path){      //Funktion
         else if(eventtype == "slider"){                               //Wenn der Eventtype gleich slider ist
             Slider slider;                                            //Erstellt einen neuen Slider
             slider.name   = element.value("name").toString();         //Übergibt den Namen für den Slider
+            slider.type   = eventtype;                                 //Übergibt den Type für den Slider
             slider.from   = element.value("from").toInt();            //Übergibt die From value für den Slider
             slider.to     = element.value("to")  .toInt();            //Übergibt die To value für dne Slider
 
