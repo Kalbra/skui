@@ -15,8 +15,7 @@
 Filenameengine filenameengine;
 
 Board voidboard;
-Board *currentboard = &voidboard;
-
+Board *currentboard;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,6 +30,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionNew, &QAction::triggered, this, &MainWindow::on_new_triggered);
     connect(ui->actionButton, &QAction::triggered, this, &MainWindow::on_button_triggered);
     connect(ui->actionSlider, &QAction::triggered, this, &MainWindow::on_slider_triggered);
+
+    voidboard.setup();
+    currentboard = &voidboard;
+
 }
 
 MainWindow::~MainWindow(){

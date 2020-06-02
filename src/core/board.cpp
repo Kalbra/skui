@@ -5,6 +5,7 @@
 
 #include <QJsonDocument>
 #include <QPushButton>
+#include <QSlider>
 #include <QLabel>
 
 void Board::setup(){
@@ -27,18 +28,16 @@ QWidget *Board::getBoard(){
 void Board::update(){
     int xbefor = 0;
     int ybefor = 0;
-    //int widgetwidth = board->width();
+    int widgetwidth = board->width();
 
-    //qDeleteAll(board->findChildren<QWidget*>("", Qt::FindDirectChildrenOnly));
+    qDeleteAll(board->children());
 
-    //qDebug() << "Update: " << this;
+    qDebug() << "Update: " << this;
     QJsonDocument document = LoadJsonDocument(p_path);
 
-    qDebug() << boardelements.size();
-
     for(int i = 0; i < boardelements.size(); i++){
-        qDebug() << board->width();
-        if((0 - xbefor) < 100){
+
+        if((widgetwidth - xbefor) < 100){
             xbefor = 0;
             ybefor = ybefor + 100;
         }
@@ -50,6 +49,16 @@ void Board::update(){
             QPushButton *button = new QPushButton(board);
             button->setGeometry(xbefor, ybefor, 100, 100);
             button->setText(boardelement.name);
+
+            button->show();
+
+            xbefor = xbefor + 100;
+        }
+        else if(eventtype == "slider"){
+            QSlider *slider = new QSlider(board);
+            slider->setGeometry(xbefor, ybefor, 100, 100);
+
+            slider->show();
 
             xbefor = xbefor + 100;
         }
