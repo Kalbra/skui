@@ -23,17 +23,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QStyle *style = qApp->style();
-
     filebar = new Filebar();
 
-    connect(ui->actionNew, &QAction::triggered, this, &MainWindow::on_new_triggered);
+    connect(ui->actionNew,    &QAction::triggered, this, &MainWindow::on_new_triggered);
+    connect(ui->actionOpen,   &QAction::triggered, this, &MainWindow::on_open_triggered);
     connect(ui->actionButton, &QAction::triggered, this, &MainWindow::on_button_triggered);
     connect(ui->actionSlider, &QAction::triggered, this, &MainWindow::on_slider_triggered);
 
     voidboard.setup();
     currentboard = &voidboard;
-
 }
 
 MainWindow::~MainWindow(){
@@ -42,6 +40,10 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::on_new_triggered(){
+
+}
+
+void MainWindow::on_open_triggered(){
     Board *board = new Board();
     currentboard = board;
 
@@ -52,7 +54,6 @@ void MainWindow::on_new_triggered(){
     board->setFile(filenameengine.currentboard);
 
     ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
-
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)

@@ -32,7 +32,6 @@ void Board::update(){
 
     qDeleteAll(board->children());
 
-    qDebug() << "Update: " << this;
     QJsonDocument document = LoadJsonDocument(p_path);
 
     for(int i = 0; i < boardelements.size(); i++){
