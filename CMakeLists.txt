@@ -43,17 +43,12 @@ add_executable(skui
   src/serialio/serialio.h
   src/serialio/serialio.cpp
 
-  src/filebar/filebar.cpp
-  src/filebar/filebar.h
-
   src/saveengine/saveengine.cpp
   src/saveengine/saveengine.h
 
   src/fileio/filedialog.h
 
   src/filenameengine/filenameengine.h
-
-  src/settings/settingstruct.h
 
   src/boardelements/boardelements.h
 )
