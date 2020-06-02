@@ -22,6 +22,8 @@ private:
     QWidget *board;
 
     std::vector<Boardelement> boardelements;
+
+    void PrintSerialById(int id);
 };
 
 #endif // BOARD_H

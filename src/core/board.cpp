@@ -25,6 +25,10 @@ QWidget *Board::getBoard(){
     return board;
 }
 
+void Board::PrintSerialById(int id){
+    qDebug() << boardelements[id].name;
+}
+
 void Board::update(){
     int xbefor = 0;
     int ybefor = 0;
