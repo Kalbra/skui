@@ -6,6 +6,8 @@ project(skui
     DESCRIPTION "A open source serial interface"
     )
 
+include(CPack)
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOUIC ON)
@@ -16,12 +18,13 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #Cpack stuff
+set(CPACK_PACKAGE_NAME "Skui")
 set(CPACK_PACKAGE_DESCRIPTION "A open source serial interface")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CPACK_PACKAGE_DESCRIPTION_SUMMARY")
 set(CPACK_PACKAGE_HOMEPAGE_URL "https://kalbra.github.io/skui/")
 
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Widgets SerialPort REQUIRED)
 
 
 add_executable(skui
@@ -36,6 +39,9 @@ add_executable(skui
 
   src/fileio/fileio.h
   src/fileio/fileio.cpp
+
+  src/serialio/serialio.h
+  src/serialio/serialio.cpp
 
   src/filebar/filebar.cpp
   src/filebar/filebar.h
@@ -52,4 +58,10 @@ add_executable(skui
   src/boardelements/boardelements.h
 )
 
-target_link_libraries(skui PRIVATE Qt5::Widgets)
+target_link_libraries(skui PRIVATE
+    Qt5::Widgets
+    Qt5::SerialPort
+)
+
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "bin" COMPONENT application)
+
