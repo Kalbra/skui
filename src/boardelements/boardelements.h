@@ -8,6 +8,8 @@ public:
     QString name;
     QString type;
     QString action;
+    int from;
+    int to;
 };
 
 #endif // BUTTON_H

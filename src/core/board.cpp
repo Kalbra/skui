@@ -4,6 +4,7 @@
 #include "../saveengine/saveengine.h"
 #include "../serialio/serialio.h"
 #include "../boardelements/boardelements.h"
+#include "../valuedecoder/valuedecoder.h"
 
 #include <QJsonDocument>
 #include <QObject>
@@ -33,9 +34,10 @@ QWidget *Board::getBoard(){
 
 void Board::PrintSerialById(int id, int value = 0){
 
+    qDebug() << ValueDecoder::Decode(boardelements[id].action, value);
 
 
-    qDebug() << boardelements[id].action;
+
 }
 
 void Board::update(){
