@@ -16,23 +16,17 @@ std::vector<Boardelement> Saveengine::GetFromFile(QString path){      //Funktion
 
         QString eventtype = element.value("type").toString();         //Extrahiert aus dem element das Keyword type und Konvertiert es in einen String
 
-        if(eventtype == "button"){                                    //Wenn der Eventtype gleich button ist
-            Button button;                                            //Erstellt einen neuen Button
-            button.name   = element.value("name")  .toString();       //Übergibt den Namen für den Button
-            button.type   = eventtype;                                 //Übergibt den Type für den Button
-            button.action = element.value("action").toString();       //Übergibt die Aktion, die ausgeführt werden soll
+        Boardelement boardelement;
+        boardelement.name   = element.value("name")  .toString();
+        boardelement.type   = element.value("type")  .toString();
+        boardelement.action = element.value("action").toString();
 
-            boardelements.push_back(button);                          //Hängt den Button an das Ende des Vectors(boardelements) an
+        if(eventtype == "slider"){
+            boardelement.from = element.value("from").toInt();
+            boardelement.to   = element.value("to")  .toInt();
         }
-        else if(eventtype == "slider"){                               //Wenn der Eventtype gleich slider ist
-            Slider slider;                                            //Erstellt einen neuen Slider
-            slider.name   = element.value("name").toString();         //Übergibt den Namen für den Slider
-            slider.type   = eventtype;                                 //Übergibt den Type für den Slider
-            slider.from   = element.value("from").toInt();            //Übergibt die From value für den Slider
-            slider.to     = element.value("to")  .toInt();            //Übergibt die To value für dne Slider
 
-            boardelements.push_back(slider);                          //Hängt den Slider an das Ende des Vectors(boardelements) an
-        }
+        boardelements.push_back(boardelement);
     }
 
     return boardelements;                                             //Returnt den Vector(boardelements)

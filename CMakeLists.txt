@@ -37,6 +37,9 @@ add_executable(skui
   src/core/board.cpp
   src/core/board.h
 
+  src/valuedecoder/valuedecoder.cpp
+  src/valuedecoder/valuedecoder.h
+
   src/fileio/fileio.h
   src/fileio/fileio.cpp
 

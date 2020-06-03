@@ -4,6 +4,7 @@
 #include "../saveengine/saveengine.h"
 #include "../serialio/serialio.h"
 #include "../boardelements/boardelements.h"
+#include "../valuedecoder/valuedecoder.h"
 
 #include <QJsonDocument>
 #include <QObject>
@@ -31,20 +32,12 @@ QWidget *Board::getBoard(){
     return board;
 }
 
-void Board::PrintSerialById(int id){
-    QString eventtype = boardelements[id].type;
+void Board::PrintSerialById(int id, int value = 0){
 
-    if(eventtype == "button"){
-        Button *button = static_cast<Button*>(&boardelements[id]);
-        qDebug() << button->name;
-        serial->send(button->action);
-    }
-    else if(eventtype == "slider"){
-        Slider *slider = static_cast<Slider*>(&boardelements[id]);
-        serial->send(QString::number(slider->to));
-    }
+    qDebug() << ValueDecoder::Decode(boardelements[id].action, value);
 
-    qDebug() << boardelements[id].name;
+
+
 }
 
 void Board::update(){
@@ -80,6 +73,9 @@ void Board::update(){
         else if(eventtype == "slider"){
             QSlider *slider = new QSlider(board);
             slider->setGeometry(xbefor, ybefor, 100, 100);
+            slider->setRange(boardelement.from, boardelement.to);
+
+            connect(slider, &QAbstractSlider::sliderMoved, this, [=] {PrintSerialById(i, slider->value());});
 
             slider->show();
 
