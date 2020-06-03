@@ -34,15 +34,15 @@ QWidget *Board::getBoard(){
 void Board::PrintSerialById(int id){
     QString eventtype = boardelements[id].type;
 
-    if(eventtype == "button"){
-        Button *button = static_cast<Button*>(&boardelements[id]);
-        qDebug() << button->name;
-        serial->send(button->action);
-    }
-    else if(eventtype == "slider"){
-        Slider *slider = static_cast<Slider*>(&boardelements[id]);
-        serial->send(QString::number(slider->to));
-    }
+//    if(eventtype == "button"){
+//        Button *button = static_cast<Button*>(&boardelements[id]);
+//        qDebug() << button->name;
+//        serial->send(button->action);
+//    }
+//    else if(eventtype == "slider"){
+//        Slider *slider = static_cast<Slider*>(&boardelements[id]);
+//        serial->send(QString::number(slider->to));
+//    }
 
     qDebug() << boardelements[id].name;
 }
