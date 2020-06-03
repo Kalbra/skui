@@ -28,7 +28,7 @@ private:
 
     std::vector<Boardelement> boardelements;
 
-    void PrintSerialById(int id);
+    void PrintSerialById(int id, int value);
 };
 
 #endif // BOARD_H
