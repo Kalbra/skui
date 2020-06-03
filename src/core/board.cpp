@@ -2,14 +2,20 @@
 #include "mainwindow.h"
 #include "../fileio/fileio.h"
 #include "../saveengine/saveengine.h"
+#include "../serialio/serialio.h"
+#include "../boardelements/boardelements.h"
 
 #include <QJsonDocument>
+#include <QObject>
 #include <QPushButton>
 #include <QSlider>
 #include <QLabel>
 
+
+
 void Board::setup(){
-    board = new QWidget();
+    board  = new QWidget();
+    serial = new Serialio("/dev/ttyUSB0", 9600);
 }
 
 void Board::setFile(QString path){
@@ -26,6 +32,18 @@ QWidget *Board::getBoard(){
 }
 
 void Board::PrintSerialById(int id){
+    QString eventtype = boardelements[id].type;
+
+    if(eventtype == "button"){
+        Button *button = static_cast<Button*>(&boardelements[id]);
+        qDebug() << button->name;
+        serial->send(button->action);
+    }
+    else if(eventtype == "slider"){
+        Slider *slider = static_cast<Slider*>(&boardelements[id]);
+        serial->send(QString::number(slider->to));
+    }
+
     qDebug() << boardelements[id].name;
 }
 
@@ -52,6 +70,8 @@ void Board::update(){
             QPushButton *button = new QPushButton(board);
             button->setGeometry(xbefor, ybefor, 100, 100);
             button->setText(boardelement.name);
+
+            connect(button, &QPushButton::clicked, this, [=]{ PrintSerialById(i); });
 
             button->show();
 

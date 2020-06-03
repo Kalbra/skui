@@ -2,12 +2,15 @@
 #define BOARD_H
 #include <QtCore>
 #include <QMainWindow>
+#include <QObject>
 
-//#include "mainwindow.h"
 #include "../boardelements/boardelements.h"
+#include "../serialio/serialio.h"
 
-class Board
+class Board : public QObject
 {
+    Q_OBJECT
+
 public:
 
     void setup();
@@ -20,6 +23,8 @@ private:
     QString p_path = "files.json";
 
     QWidget *board;
+
+    Serialio *serial;
 
     std::vector<Boardelement> boardelements;
 
