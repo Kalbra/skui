@@ -21,6 +21,11 @@ std::vector<Boardelement> Saveengine::GetFromFile(QString path){      //Funktion
         boardelement.type   = element.value("type")  .toString();
         boardelement.action = element.value("action").toString();
 
+        if(eventtype == "slider"){
+            boardelement.from = element.value("from").toInt();
+            boardelement.to   = element.value("to")  .toInt();
+        }
+
         boardelements.push_back(boardelement);
     }
 
