@@ -3,7 +3,6 @@
 #include "../boardelements/boardelements.h"
 #include "board.h"
 #include "../filenameengine/filenameengine.h"
-#include "../filebar/filebar.h"
 #include "../fileio/filedialog.h"
 #include "../fileio/fileio.h"
 
@@ -22,8 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    filebar = new Filebar();
 
     connect(ui->actionNew,    &QAction::triggered, this, &MainWindow::on_new_triggered);
     connect(ui->actionOpen,   &QAction::triggered, this, &MainWindow::on_open_triggered);

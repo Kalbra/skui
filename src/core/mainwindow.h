@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 
-#include "../filebar/filebar.h"
 #include "board.h"
 
 QT_BEGIN_NAMESPACE
@@ -34,11 +33,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-
-    Filebar *filebar;
-
-
-
 
 };
 #endif // MAINWINDOW_H
