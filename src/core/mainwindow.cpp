@@ -54,13 +54,15 @@ void MainWindow::on_open_triggered(){
     board->setup();
 
     QString url = OpenFileDialog(this);
-    filenameengine.Setnewfile(url);
-    board->setFile(filenameengine.currentboard);
+    if(url != ""){
+        filenameengine.Setnewfile(url);
+        board->setFile(filenameengine.currentboard);
 
-    ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
-    ui->boards->setCurrentWidget(board->getBoard());
+        ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
+        ui->boards->setCurrentWidget(board->getBoard());
 
-    currentboard->update();
+        currentboard->update();
+    }
 }
 
 void MainWindow::on_reload_triggered(){
