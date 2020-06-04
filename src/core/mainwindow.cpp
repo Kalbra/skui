@@ -57,6 +57,7 @@ void MainWindow::on_open_triggered(){
     board->setFile(filenameengine.currentboard);
 
     ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
+    ui->boards->setCurrentWidget(board->getBoard());
 }
 
 void MainWindow::on_reload_triggered(){
