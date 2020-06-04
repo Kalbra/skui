@@ -1,22 +1,33 @@
 #ifndef BOARDEDITOR_H
 #define BOARDEDITOR_H
+#include <QWidget>
+#include <QObject>
+#include <QTreeWidget>
 
-#include <QDialog>
+#include "../boardelements/boardelements.h"
 
-namespace Ui {
-class Boardeditor;
-}
-
-class Boardeditor : public QDialog
+class Boardeditor : public QObject
 {
-    Q_OBJECT
 
+    Q_OBJECT
 public:
-    explicit Boardeditor(QWidget *parent = nullptr);
-    ~Boardeditor();
+    Boardeditor();
+
+    QWidget *getBoardeditor();
+
+    void update();
+
+private slots:
+    void on_add_clicked();
 
 private:
-    Ui::Boardeditor *ui;
+    void on_delete_clicked();
+
+    QWidget *p_boardeditor;
+
+    QTreeWidget *eventtree = nullptr;
+
+    std::vector<Boardelement> boardelements;
 };
 
 #endif // BOARDEDITOR_H

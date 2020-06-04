@@ -74,9 +74,9 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 }
 
 void MainWindow::on_boardeditor_triggered(){
-    Boardeditor boardeditor;
-    boardeditor.setModal(true);
-    boardeditor.exec();
+    Boardeditor *boardeditor = new Boardeditor();
+    ui->boards->addTab(boardeditor->getBoardeditor(), filenameengine.currentboard);
+    ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
 }
 
 void MainWindow::on_slider_triggered(){

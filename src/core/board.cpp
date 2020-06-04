@@ -35,9 +35,6 @@ QWidget *Board::getBoard(){
 void Board::PrintSerialById(int id, int value = 0){
 
     qDebug() << ValueDecoder::Decode(boardelements[id].action, value);
-
-
-
 }
 
 void Board::update(){

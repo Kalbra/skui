@@ -36,7 +36,10 @@ add_executable(skui
 
   src/boardeditor/boardeditor.cpp
   src/boardeditor/boardeditor.h
-  src/boardeditor/boardeditor.ui
+
+  src/boardeditor/dialog/adddialog.cpp
+  src/boardeditor/dialog/adddialog.h
+  src/boardeditor/dialog/adddialog.ui
 
   src/core/board.cpp
   src/core/board.h
