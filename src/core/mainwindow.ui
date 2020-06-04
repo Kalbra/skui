@@ -106,8 +106,15 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionButton"/>
     <addaction name="actionSlider"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionReload"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuInsert"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -138,6 +145,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionSlider">
    <property name="text">
     <string>Slider</string>
+   </property>
+  </action>
+  <action name="actionReload">
+   <property name="text">
+    <string>Reload</string>
    </property>
   </action>
  </widget>
