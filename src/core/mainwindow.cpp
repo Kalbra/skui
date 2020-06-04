@@ -5,6 +5,7 @@
 #include "../filenameengine/filenameengine.h"
 #include "../fileio/filedialog.h"
 #include "../fileio/fileio.h"
+#include "../boardeditor/boardeditor.h"
 
 #include <QtCore>
 #include <QDockWidget>
@@ -26,8 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionNew,    &QAction::triggered, this, &MainWindow::on_new_triggered);
     connect(ui->actionOpen,   &QAction::triggered, this, &MainWindow::on_open_triggered);
 
-    //Insert
-    connect(ui->actionButton, &QAction::triggered, this, &MainWindow::on_button_triggered);
+    //Edit
+    connect(ui->actionBoardeditor, &QAction::triggered, this, &MainWindow::on_boardeditor_triggered);
     connect(ui->actionSlider, &QAction::triggered, this, &MainWindow::on_slider_triggered);
 
     //View
@@ -72,8 +73,10 @@ void MainWindow::resizeEvent(QResizeEvent* event)
    currentboard->update();
 }
 
-void MainWindow::on_button_triggered(){
-
+void MainWindow::on_boardeditor_triggered(){
+    Boardeditor boardeditor;
+    boardeditor.setModal(true);
+    boardeditor.exec();
 }
 
 void MainWindow::on_slider_triggered(){

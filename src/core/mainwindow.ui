@@ -101,9 +101,9 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menuInsert">
     <property name="title">
-     <string>Insert</string>
+     <string>Edit</string>
     </property>
-    <addaction name="actionButton"/>
+    <addaction name="actionBoardeditor"/>
     <addaction name="actionSlider"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -137,9 +137,9 @@ p, li { white-space: pre-wrap; }
     <string>Open..</string>
    </property>
   </action>
-  <action name="actionButton">
+  <action name="actionBoardeditor">
    <property name="text">
-    <string>Button</string>
+    <string>Boardeditor</string>
    </property>
   </action>
   <action name="actionSlider">
