@@ -21,16 +21,14 @@ QString ValueDecoder::Decode(QString str, int value){
     if(pos != string::npos){
         cppstring.replace(pos, 7, to_string(value));
     }
-
     pos = cppstring.find("$TIME_HOUR$");
     if(pos != string::npos){
-        cppstring.replace(pos, 6, to_string(now->tm_hour));
+        cppstring.replace(pos, 11, to_string(now->tm_hour));
     }
     pos = cppstring.find("$TIME_SEC$");
     if(pos != string::npos){
-        cppstring.replace(pos, 6, to_string(now->tm_sec));
+        cppstring.replace(pos, 10, to_string(now->tm_sec));
     }
-
 
 
     return QString::fromStdString(cppstring);;
