@@ -89,34 +89,7 @@ void Boardeditor::on_add_clicked(){
     adddialog.exec();
 
     if(boardelement != nullptr){
-        QTreeWidgetItem *type = new QTreeWidgetItem();
-        type->setText(0, boardelement->type);
-
-        QTreeWidgetItem *action = new QTreeWidgetItem();
-        action->setText(0, boardelement->action);
-        action->setFlags(action->flags() | Qt::ItemIsEditable);
-
-        QTreeWidgetItem *name = new QTreeWidgetItem();
-        name->setText(0, boardelement->name);
-        name->setFlags(name->flags() | Qt::ItemIsEditable);
-
-        type->addChild(action);
-        type->addChild(name);
-
-        if(boardelement->type == "slider"){
-            QTreeWidgetItem *from = new QTreeWidgetItem();
-            from->setText(0, QString::number(boardelement->from));
-            from->setFlags(from->flags() | Qt::ItemIsEditable);
-
-            QTreeWidgetItem *to   = new QTreeWidgetItem();
-            to->setText(0, QString::number(boardelement->to));
-            from->setFlags(to->flags() | Qt::ItemIsEditable);
-
-            type->addChild(from);
-            type->addChild(to);
-        }
-
-        eventtree->addTopLevelItem(type);
+        addtoTree(boardelement);
     }
 }
 
