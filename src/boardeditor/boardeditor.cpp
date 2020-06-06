@@ -49,6 +49,19 @@ void Boardeditor::update(){
         type->addChild(action);
         type->addChild(name);
 
+        if(boardelement.type == "slider"){
+            QTreeWidgetItem *from = new QTreeWidgetItem();
+            from->setText(0, QString::number(boardelement.from));
+            from->setFlags(from->flags() | Qt::ItemIsEditable);
+
+            QTreeWidgetItem *to   = new QTreeWidgetItem();
+            to->setText(0, QString::number(boardelement.to));
+            from->setFlags(to->flags() | Qt::ItemIsEditable);
+
+            type->addChild(from);
+            type->addChild(to);
+        }
+
         eventtree->addTopLevelItem(type);
     }
 }
