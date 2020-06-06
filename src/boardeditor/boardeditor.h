@@ -23,6 +23,7 @@ public:
 private slots:
     void on_add_clicked();
     void on_delete_clicked();
+    void on_save_clicked();
 
 private:
     QWidget *p_boardeditor;

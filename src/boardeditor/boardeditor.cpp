@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QTreeWidget>
+#include <QDebug>
 
 Boardeditor::Boardeditor(){
     p_boardeditor = new QWidget();
@@ -16,9 +17,11 @@ Boardeditor::Boardeditor(){
 
     QPushButton *add       = new QPushButton("Add");
     QPushButton *delete_   = new QPushButton("Delete");
+    QPushButton *save      = new QPushButton("Save");
 
     connect(add, SIGNAL(clicked()), this, SLOT(on_add_clicked()));
     connect(delete_, SIGNAL(clicked()), this, SLOT(on_delete_clicked()));
+    connect(save, SIGNAL(clicked()), this, SLOT(on_save_clicked()));
 
 
     eventtree = new QTreeWidget();
@@ -29,7 +32,8 @@ Boardeditor::Boardeditor(){
 
     gridlayout->addWidget(add,       0, 0, 1, 1);
     gridlayout->addWidget(delete_,   0, 1, 1, 1);
-    gridlayout->addWidget(eventtree, 1, 0, 2, 2);
+    gridlayout->addWidget(save,      0, 2, 1, 1);
+    gridlayout->addWidget(eventtree, 1, 0, 3, 3);
 
     p_boardeditor->setLayout(gridlayout);
 
@@ -107,6 +111,30 @@ void Boardeditor::on_add_clicked(){
 
 void Boardeditor::on_delete_clicked(){
     delete eventtree->currentItem();
+}
+
+void Boardeditor::on_save_clicked(){
+    std::vector<Boardelement> boardelements;
+    for(int i = 0; i < eventtree->topLevelItemCount(); i++){
+        QTreeWidgetItem *item = eventtree->takeTopLevelItem(i);
+
+        Boardelement boardelement;
+        boardelement.type = item->text(0);
+
+        //qDebug() << item->child(0)->text(0);
+
+        boardelement.action = item->child(0)->text(0);
+        boardelement.name = item->child(1)->text(0);
+
+        if(boardelement.type == "slider"){
+            boardelement.from = item->child(2)->text(0).toInt();
+            boardelement.to   = item->child(3)->text(0).toInt();
+        }
+        boardelements.push_back(boardelement);
+        eventtree->addTopLevelItem(item);
+    }
+    Saveengine saveengine;
+    saveengine.SaveToFile(p_path, boardelements);
 }
 
 QWidget *Boardeditor::getBoardeditor(){
