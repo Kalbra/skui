@@ -20,6 +20,10 @@ Boardeditor::Boardeditor(){
 
     eventtree = new QTreeWidget();
 
+    QTreeWidgetItem *treetitle = eventtree->headerItem();
+    treetitle->setText(0, "Value");
+    treetitle->setText(1, "Type");
+
     gridlayout->addWidget(add,       0, 0, 1, 1);
     gridlayout->addWidget(delete_,   0, 1, 1, 1);
     gridlayout->addWidget(eventtree, 1, 0, 2, 2);
@@ -29,29 +33,50 @@ Boardeditor::Boardeditor(){
     p_boardeditor->show();
 }
 
-void Boardeditor::update(){
-    //qDeleteAll(eventtree->children());
+void Boardeditor::addtoTree(Boardelement *boardelement){
+    QTreeWidgetItem *type = new QTreeWidgetItem();
+    type->setText(0, boardelement->type);
+    type->setText(1, "Event type");
 
-    for(int i = 0; i < boardelements.size(); i++){
-        Boardelement boardelement = boardelements[i];
+    QTreeWidgetItem *action = new QTreeWidgetItem();
+    action->setText(0, boardelement->action);
+    action->setText(1, "Action");
+    action->setFlags(action->flags() | Qt::ItemIsEditable);
 
-        QTreeWidgetItem *type = new QTreeWidgetItem();
-        type->setText(0, boardelement.type);
+    QTreeWidgetItem *name = new QTreeWidgetItem();
+    name->setText(0, boardelement->name);
+    name->setText(1, "Name");
+    name->setFlags(name->flags() | Qt::ItemIsEditable);
 
-        QTreeWidgetItem *action = new QTreeWidgetItem();
-        action->setText(0, boardelement.action);
-        action->setFlags(action->flags() | Qt::ItemIsEditable);
+    type->addChild(action);
+    type->addChild(name);
 
-        QTreeWidgetItem *name = new QTreeWidgetItem();
-        name->setText(0, boardelement.name);
-        name->setFlags(name->flags() | Qt::ItemIsEditable);
+    if(boardelement->type == "slider"){
+        QTreeWidgetItem *from = new QTreeWidgetItem();
+        from->setText(0, QString::number(boardelement->from));
+        from->setText(1, "From");
+        from->setFlags(from->flags() | Qt::ItemIsEditable);
 
-        type->addChild(action);
-        type->addChild(name);
+        QTreeWidgetItem *to   = new QTreeWidgetItem();
+        to->setText(0, QString::number(boardelement->to));
+        to->setText(1, "To");
+        to->setFlags(to->flags() | Qt::ItemIsEditable);
 
-        eventtree->addTopLevelItem(type);
+        if(boardelement.type == "slider"){
+            QTreeWidgetItem *from = new QTreeWidgetItem();
+            from->setText(0, QString::number(boardelement.from));
+            from->setFlags(from->flags() | Qt::ItemIsEditable);
+
+            QTreeWidgetItem *to   = new QTreeWidgetItem();
+            to->setText(0, QString::number(boardelement.to));
+            from->setFlags(to->flags() | Qt::ItemIsEditable);
+
+            type->addChild(from);
+            type->addChild(to);
     }
+
 }
+
 
 void Boardeditor::on_add_clicked(){
     Boardelement *boardelement = new Boardelement();
@@ -60,8 +85,34 @@ void Boardeditor::on_add_clicked(){
     adddialog.exec();
 
     if(boardelement != nullptr){
-        boardelements.push_back(*boardelement);
-        update();
+        QTreeWidgetItem *type = new QTreeWidgetItem();
+        type->setText(0, boardelement->type);
+
+        QTreeWidgetItem *action = new QTreeWidgetItem();
+        action->setText(0, boardelement->action);
+        action->setFlags(action->flags() | Qt::ItemIsEditable);
+
+        QTreeWidgetItem *name = new QTreeWidgetItem();
+        name->setText(0, boardelement->name);
+        name->setFlags(name->flags() | Qt::ItemIsEditable);
+
+        type->addChild(action);
+        type->addChild(name);
+
+        if(boardelement->type == "slider"){
+            QTreeWidgetItem *from = new QTreeWidgetItem();
+            from->setText(0, QString::number(boardelement->from));
+            from->setFlags(from->flags() | Qt::ItemIsEditable);
+
+            QTreeWidgetItem *to   = new QTreeWidgetItem();
+            to->setText(0, QString::number(boardelement->to));
+            from->setFlags(to->flags() | Qt::ItemIsEditable);
+
+            type->addChild(from);
+            type->addChild(to);
+        }
+
+        eventtree->addTopLevelItem(type);
     }
 }
 

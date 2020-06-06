@@ -27,7 +27,7 @@ private:
 
     QTreeWidget *eventtree = nullptr;
 
-    std::vector<Boardelement> boardelements;
+    void addtoTree(Boardelement *boardelement);
 };
 
 #endif // BOARDEDITOR_H
