@@ -2,8 +2,6 @@
 #include "ui_adddialog.h"
 #include "../../boardelements/boardelements.h"
 
-#include <QDebug>
-
 Adddialog::Adddialog(Boardelement* boardelement) :
     QDialog(nullptr),
     ui(new Ui::Adddialog)
@@ -21,12 +19,10 @@ Adddialog::~Adddialog()
 }
 
 void Adddialog::on_eventtypecombobox_currentIndexChanged(int index){
-    qDebug() << index;
     switch (index) {
         case 0:{
             p_boardelement->type = "button";
             ui->fromtofield->setEnabled(false);
-            qDebug() << "button";
             break;
         }
         case 1:{

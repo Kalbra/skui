@@ -77,8 +77,9 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 
 void MainWindow::on_boardeditor_triggered(){
     Boardeditor *boardeditor = new Boardeditor();
-    ui->boards->addTab(boardeditor->getBoardeditor(), filenameengine.currentboard);
+    ui->boards->addTab(boardeditor->getBoardeditor(), "New...");
     ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
+
 }
 
 void MainWindow::on_slider_triggered(){

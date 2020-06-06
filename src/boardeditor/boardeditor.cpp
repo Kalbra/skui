@@ -1,6 +1,7 @@
 #include "boardeditor.h"
 #include "dialog/adddialog.h"
 #include "../boardelements/boardelements.h"
+#include "../saveengine/saveengine.h"
 
 #include <QWidget>
 #include <QPushButton>
@@ -10,12 +11,14 @@
 Boardeditor::Boardeditor(){
     p_boardeditor = new QWidget();
 
+
     QGridLayout *gridlayout = new QGridLayout;
 
     QPushButton *add       = new QPushButton("Add");
     QPushButton *delete_   = new QPushButton("Delete");
 
     connect(add, SIGNAL(clicked()), this, SLOT(on_add_clicked()));
+    connect(delete_, SIGNAL(clicked()), this, SLOT(on_delete_clicked()));
 
 
     eventtree = new QTreeWidget();
@@ -76,6 +79,7 @@ void Boardeditor::addtoTree(Boardelement *boardelement){
     }
 
 }
+}
 
 
 void Boardeditor::on_add_clicked(){
@@ -117,7 +121,7 @@ void Boardeditor::on_add_clicked(){
 }
 
 void Boardeditor::on_delete_clicked(){
-
+    delete eventtree->currentItem();
 }
 
 QWidget *Boardeditor::getBoardeditor(){
