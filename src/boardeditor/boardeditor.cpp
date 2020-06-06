@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QTreeWidget>
+#include <QDebug>
 
 Boardeditor::Boardeditor(){
     p_boardeditor = new QWidget();
@@ -16,9 +17,11 @@ Boardeditor::Boardeditor(){
 
     QPushButton *add       = new QPushButton("Add");
     QPushButton *delete_   = new QPushButton("Delete");
+    QPushButton *save      = new QPushButton("Save");
 
     connect(add, SIGNAL(clicked()), this, SLOT(on_add_clicked()));
     connect(delete_, SIGNAL(clicked()), this, SLOT(on_delete_clicked()));
+    connect(save, SIGNAL(clicked()), this, SLOT(on_save_clicked()));
 
 
     eventtree = new QTreeWidget();
@@ -29,7 +32,8 @@ Boardeditor::Boardeditor(){
 
     gridlayout->addWidget(add,       0, 0, 1, 1);
     gridlayout->addWidget(delete_,   0, 1, 1, 1);
-    gridlayout->addWidget(eventtree, 1, 0, 2, 2);
+    gridlayout->addWidget(save,      0, 2, 1, 1);
+    gridlayout->addWidget(eventtree, 1, 0, 3, 3);
 
     p_boardeditor->setLayout(gridlayout);
 
@@ -65,44 +69,6 @@ void Boardeditor::addtoTree(Boardelement *boardelement){
         to->setText(1, "To");
         to->setFlags(to->flags() | Qt::ItemIsEditable);
 
-        if(boardelement.type == "slider"){
-            QTreeWidgetItem *from = new QTreeWidgetItem();
-            from->setText(0, QString::number(boardelement.from));
-            from->setFlags(from->flags() | Qt::ItemIsEditable);
-
-            QTreeWidgetItem *to   = new QTreeWidgetItem();
-            to->setText(0, QString::number(boardelement.to));
-            from->setFlags(to->flags() | Qt::ItemIsEditable);
-
-            type->addChild(from);
-            type->addChild(to);
-    }
-
-}
-}
-
-
-void Boardeditor::on_add_clicked(){
-    Boardelement *boardelement = new Boardelement();
-    Adddialog adddialog(boardelement);
-    adddialog.setModal(true);
-    adddialog.exec();
-
-    if(boardelement != nullptr){
-        QTreeWidgetItem *type = new QTreeWidgetItem();
-        type->setText(0, boardelement->type);
-
-        QTreeWidgetItem *action = new QTreeWidgetItem();
-        action->setText(0, boardelement->action);
-        action->setFlags(action->flags() | Qt::ItemIsEditable);
-
-        QTreeWidgetItem *name = new QTreeWidgetItem();
-        name->setText(0, boardelement->name);
-        name->setFlags(name->flags() | Qt::ItemIsEditable);
-
-        type->addChild(action);
-        type->addChild(name);
-
         if(boardelement->type == "slider"){
             QTreeWidgetItem *from = new QTreeWidgetItem();
             from->setText(0, QString::number(boardelement->from));
@@ -115,13 +81,60 @@ void Boardeditor::on_add_clicked(){
             type->addChild(from);
             type->addChild(to);
         }
+    }
+    eventtree->addTopLevelItem(type);
+}
 
-        eventtree->addTopLevelItem(type);
+void Boardeditor::loadFile(){
+    Saveengine saveengine;
+    std::vector<Boardelement> boardelements = saveengine.GetFromFile(p_path);
+
+    for(int i = 0; i < boardelements.size(); i++){
+        addtoTree(&boardelements[i]);
+    }
+}
+
+void Boardeditor::saveFile(){
+
+}
+
+void Boardeditor::on_add_clicked(){
+    Boardelement *boardelement = new Boardelement();
+    Adddialog adddialog(boardelement);
+    adddialog.setModal(true);
+    adddialog.exec();
+
+    if(boardelement != nullptr){
+        addtoTree(boardelement);
     }
 }
 
 void Boardeditor::on_delete_clicked(){
     delete eventtree->currentItem();
+}
+
+void Boardeditor::on_save_clicked(){
+    std::vector<Boardelement> boardelements;
+    for(int i = 0; i < eventtree->topLevelItemCount(); i++){
+        QTreeWidgetItem *item = eventtree->takeTopLevelItem(i);
+
+        Boardelement boardelement;
+        boardelement.type = item->text(0);
+
+        //qDebug() << item->child(0)->text(0);
+
+        boardelement.action = item->child(0)->text(0);
+        boardelement.name = item->child(1)->text(0);
+
+        if(boardelement.type == "slider"){
+            boardelement.from = item->child(2)->text(0).toInt();
+            boardelement.to   = item->child(3)->text(0).toInt();
+        }
+        boardelements.push_back(boardelement);
+        eventtree->addTopLevelItem(item);
+    }
+    Saveengine saveengine;
+    saveengine.SaveToFile(p_path, boardelements);
 }
 
 QWidget *Boardeditor::getBoardeditor(){

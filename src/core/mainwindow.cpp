@@ -44,7 +44,9 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::on_new_triggered(){
-
+    Boardeditor *boardeditor = new Boardeditor();
+    ui->boards->addTab(boardeditor->getBoardeditor(), "New...");
+    ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
 }
 
 void MainWindow::on_open_triggered(){
@@ -76,10 +78,13 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 }
 
 void MainWindow::on_boardeditor_triggered(){
-    Boardeditor *boardeditor = new Boardeditor();
-    ui->boards->addTab(boardeditor->getBoardeditor(), "New...");
-    ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
-
+    if(filenameengine.currentboard != ""){
+        Boardeditor *boardeditor = new Boardeditor();
+        boardeditor->setFile(filenameengine.currentboard);
+        boardeditor->loadFile();
+        ui->boards->addTab(boardeditor->getBoardeditor(), filenameengine.currentboard);
+        ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
+    }
 }
 
 void MainWindow::on_slider_triggered(){
