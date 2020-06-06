@@ -15,19 +15,16 @@ public:
 
     QWidget *getBoardeditor();
 
-    void update();
+    void setFile(QString path);
 
 private slots:
     void on_add_clicked();
-
-private:
     void on_delete_clicked();
 
+private:
     QWidget *p_boardeditor;
 
     QTreeWidget *eventtree = nullptr;
-
-    std::vector<Boardelement> boardelements;
 };
 
 #endif // BOARDEDITOR_H
