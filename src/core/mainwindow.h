@@ -21,8 +21,9 @@ public:
 
     void on_new_triggered();
     void on_open_triggered();
+    void on_reload_triggered();
 
-    void on_button_triggered();
+    void on_boardeditor_triggered();
 
     void on_slider_triggered();
 
