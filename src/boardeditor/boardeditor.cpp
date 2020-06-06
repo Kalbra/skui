@@ -11,6 +11,7 @@
 Boardeditor::Boardeditor(){
     p_boardeditor = new QWidget();
 
+
     QGridLayout *gridlayout = new QGridLayout;
 
     QPushButton *add       = new QPushButton("Add");
