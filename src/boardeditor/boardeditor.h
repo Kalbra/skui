@@ -25,6 +25,8 @@ private:
     QWidget *p_boardeditor;
 
     QTreeWidget *eventtree = nullptr;
+
+    void addtoTree(Boardelement *boardelement);
 };
 
 #endif // BOARDEDITOR_H

@@ -23,6 +23,10 @@ Boardeditor::Boardeditor(){
 
     eventtree = new QTreeWidget();
 
+    QTreeWidgetItem *treetitle = eventtree->headerItem();
+    treetitle->setText(0, "Value");
+    treetitle->setText(1, "Type");
+
     gridlayout->addWidget(add,       0, 0, 1, 1);
     gridlayout->addWidget(delete_,   0, 1, 1, 1);
     gridlayout->addWidget(eventtree, 1, 0, 2, 2);
@@ -32,26 +36,34 @@ Boardeditor::Boardeditor(){
     p_boardeditor->show();
 }
 
-void Boardeditor::setFile(QString path){
-    Saveengine saveengine;
-    std::vector<Boardelement> boardelements = saveengine.GetFromFile(path);
+void Boardeditor::addtoTree(Boardelement *boardelement){
+    QTreeWidgetItem *type = new QTreeWidgetItem();
+    type->setText(0, boardelement->type);
+    type->setText(1, "Event type");
 
-    for(int i = 0; i < boardelements.size(); i++){
-        Boardelement boardelement = boardelements[i];
+    QTreeWidgetItem *action = new QTreeWidgetItem();
+    action->setText(0, boardelement->action);
+    action->setText(1, "Action");
+    action->setFlags(action->flags() | Qt::ItemIsEditable);
 
-        QTreeWidgetItem *type = new QTreeWidgetItem();
-        type->setText(0, boardelement.type);
+    QTreeWidgetItem *name = new QTreeWidgetItem();
+    name->setText(0, boardelement->name);
+    name->setText(1, "Name");
+    name->setFlags(name->flags() | Qt::ItemIsEditable);
 
-        QTreeWidgetItem *action = new QTreeWidgetItem();
-        action->setText(0, boardelement.action);
-        action->setFlags(action->flags() | Qt::ItemIsEditable);
+    type->addChild(action);
+    type->addChild(name);
 
-        QTreeWidgetItem *name = new QTreeWidgetItem();
-        name->setText(0, boardelement.name);
-        name->setFlags(name->flags() | Qt::ItemIsEditable);
+    if(boardelement->type == "slider"){
+        QTreeWidgetItem *from = new QTreeWidgetItem();
+        from->setText(0, QString::number(boardelement->from));
+        from->setText(1, "From");
+        from->setFlags(from->flags() | Qt::ItemIsEditable);
 
-        type->addChild(action);
-        type->addChild(name);
+        QTreeWidgetItem *to   = new QTreeWidgetItem();
+        to->setText(0, QString::number(boardelement->to));
+        to->setText(1, "To");
+        to->setFlags(to->flags() | Qt::ItemIsEditable);
 
         if(boardelement.type == "slider"){
             QTreeWidgetItem *from = new QTreeWidgetItem();

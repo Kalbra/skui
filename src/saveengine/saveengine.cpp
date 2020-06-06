@@ -31,3 +31,20 @@ std::vector<Boardelement> Saveengine::GetFromFile(QString path){      //Funktion
 
     return boardelements;                                             //Returnt den Vector(boardelements)
 }
+
+void Saveengine::SaveToFile(QString path, std::vector<Boardelement> boardelements){
+    QJsonArray array;
+    for(int i = 0; i < boardelements.size(); i++){
+        Boardelement boardelement = boardelements[i];
+        QJsonObject object = {
+            {"type", boardelement.type},
+            {"action", boardelement.action},
+            {"name", boardelement.name},
+            {"from", boardelement.from},
+            {"to", boardelement.to}
+        };
+        array.append(object);
+    }
+    QJsonDocument document = QJsonDocument(array);
+    SaveJsonDocument(path, document);
+}
