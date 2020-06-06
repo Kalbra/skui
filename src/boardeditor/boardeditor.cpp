@@ -65,13 +65,13 @@ void Boardeditor::addtoTree(Boardelement *boardelement){
         to->setText(1, "To");
         to->setFlags(to->flags() | Qt::ItemIsEditable);
 
-        if(boardelement.type == "slider"){
+        if(boardelement->type == "slider"){
             QTreeWidgetItem *from = new QTreeWidgetItem();
-            from->setText(0, QString::number(boardelement.from));
+            from->setText(0, QString::number(boardelement->from));
             from->setFlags(from->flags() | Qt::ItemIsEditable);
 
             QTreeWidgetItem *to   = new QTreeWidgetItem();
-            to->setText(0, QString::number(boardelement.to));
+            to->setText(0, QString::number(boardelement->to));
             from->setFlags(to->flags() | Qt::ItemIsEditable);
 
             type->addChild(from);
