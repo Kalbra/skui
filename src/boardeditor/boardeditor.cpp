@@ -81,6 +81,18 @@ void Boardeditor::addtoTree(Boardelement *boardelement){
 }
 }
 
+void Boardeditor::loadFile(){
+    Saveengine saveengine;
+    std::vector<Boardelement> boardelements = saveengine.GetFromFile(p_path);
+
+    for(int i = 0; i < boardelements.size(); i++){
+        addtoTree(&boardelements[i]);
+    }
+}
+
+void Boardeditor::saveFile(){
+
+}
 
 void Boardeditor::on_add_clicked(){
     Boardelement *boardelement = new Boardelement();
@@ -92,6 +104,8 @@ void Boardeditor::on_add_clicked(){
         addtoTree(boardelement);
     }
 }
+
+
 
 void Boardeditor::on_delete_clicked(){
     delete eventtree->currentItem();
