@@ -76,9 +76,9 @@ void Boardeditor::addtoTree(Boardelement *boardelement){
 
             type->addChild(from);
             type->addChild(to);
+        }
     }
-
-}
+    eventtree->addTopLevelItem(type);
 }
 
 void Boardeditor::loadFile(){
@@ -104,8 +104,6 @@ void Boardeditor::on_add_clicked(){
         addtoTree(boardelement);
     }
 }
-
-
 
 void Boardeditor::on_delete_clicked(){
     delete eventtree->currentItem();
