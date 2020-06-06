@@ -21,13 +21,25 @@ QString ValueDecoder::Decode(QString str, int value){
     if(pos != string::npos){
         cppstring.replace(pos, 7, to_string(value));
     }
+    pos = cppstring.find("$TIME_SEC$");
+    if(pos != string::npos){
+        cppstring.replace(pos, 10, to_string(now->tm_sec));
+    }
+    pos = cppstring.find("$TIME_MIN$");
+    if(pos != string::npos){
+        cppstring.replace(pos, 10, to_string(now->tm_min));
+    }
     pos = cppstring.find("$TIME_HOUR$");
     if(pos != string::npos){
         cppstring.replace(pos, 11, to_string(now->tm_hour));
     }
-    pos = cppstring.find("$TIME_SEC$");
+    pos = cppstring.find("$TIME_DAY$");
     if(pos != string::npos){
-        cppstring.replace(pos, 10, to_string(now->tm_sec));
+        cppstring.replace(pos, 10, to_string(now->tm_mday));
+    }
+    pos = cppstring.find("$TIME_YEAR$");
+    if(pos != string::npos){
+        cppstring.replace(pos, 11, to_string(now->tm_year));
     }
 
 
