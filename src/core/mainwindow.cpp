@@ -6,11 +6,15 @@
 #include "../fileio/filedialog.h"
 #include "../fileio/fileio.h"
 #include "../boardeditor/boardeditor.h"
+#include "../toolbar/toolbar.h"
 
 #include <QtCore>
 #include <QDockWidget>
 #include <vector>
 #include <QPushButton>
+#include <QWidget>
+#include <QLabel>
+
 
 Filenameengine filenameengine;
 
@@ -36,6 +40,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     voidboard.setup();
     currentboard = &voidboard;
+
+    Toolbar *toolbar = new Toolbar();
+
+    ui->boards->setCornerWidget(toolbar->getToolbar(), Qt::TopRightCorner);
 }
 
 MainWindow::~MainWindow(){
