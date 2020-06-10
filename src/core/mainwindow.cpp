@@ -6,11 +6,15 @@
 #include "../fileio/filedialog.h"
 #include "../fileio/fileio.h"
 #include "../boardeditor/boardeditor.h"
+#include "../toolbar/toolbar.h"
 
 #include <QtCore>
 #include <QDockWidget>
 #include <vector>
 #include <QPushButton>
+#include <QWidget>
+#include <QLabel>
+
 
 Filenameengine filenameengine;
 
@@ -34,8 +38,14 @@ MainWindow::MainWindow(QWidget *parent)
     //View
     connect(ui->actionReload, &QAction::triggered, this, &MainWindow::on_reload_triggered);
 
-    voidboard.setup();
+    p_toolbar = new Toolbar();
+
+    ui->boards->setCornerWidget(p_toolbar->getToolbar(), Qt::TopRightCorner);
+
+    voidboard.setup(p_toolbar);
     currentboard = &voidboard;
+
+
 }
 
 MainWindow::~MainWindow(){
@@ -53,7 +63,7 @@ void MainWindow::on_open_triggered(){
     Board *board = new Board();
     currentboard = board;
 
-    board->setup();
+    board->setup(p_toolbar);
 
     QString url = OpenFileDialog(this);
     if(url != ""){

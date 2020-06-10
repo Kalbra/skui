@@ -6,6 +6,7 @@
 
 #include "../boardelements/boardelements.h"
 #include "../serialio/serialio.h"
+#include "../toolbar/toolbar.h"
 
 class Board : public QObject
 {
@@ -13,11 +14,14 @@ class Board : public QObject
 
 public:
 
-    void setup();
+    void setup(Toolbar *toolbar);
     void setFile(QString path);
     void update();
 
     QWidget *getBoard();
+
+private slots:
+    void changeSerialSettings();
 
 private:
     QString p_path = "files.json";
@@ -26,9 +30,15 @@ private:
 
     Serialio *serial;
 
+    Toolbar *p_toolbar;
+
     std::vector<Boardelement> boardelements;
 
     void PrintSerialById(int id, int value);
+
+
+
+
 };
 
 #endif // BOARD_H

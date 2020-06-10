@@ -56,6 +56,9 @@ add_executable(skui
   src/saveengine/saveengine.cpp
   src/saveengine/saveengine.h
 
+  src/toolbar/toolbar.cpp
+  src/toolbar/toolbar.h
+
   src/fileio/filedialog.h
 
   src/filenameengine/filenameengine.h

@@ -5,6 +5,7 @@
 #include "../serialio/serialio.h"
 #include "../boardelements/boardelements.h"
 #include "../valuedecoder/valuedecoder.h"
+#include "../toolbar/toolbar.h"
 
 #include <QJsonDocument>
 #include <QObject>
@@ -14,9 +15,14 @@
 
 
 
-void Board::setup(){
+void Board::setup(Toolbar *toolbar){
     board  = new QWidget();
     serial = new Serialio("/dev/ttyUSB0", 9600);
+    p_toolbar = toolbar;
+
+    connect(p_toolbar, SIGNAL(settingsChanged()), this, SLOT(changeSerialSettings()));
+
+    changeSerialSettings();
 }
 
 void Board::setFile(QString path){
@@ -33,8 +39,12 @@ QWidget *Board::getBoard(){
 }
 
 void Board::PrintSerialById(int id, int value = 0){
+    serial->send(ValueDecoder::Decode(boardelements[id].action, value));
+}
 
-    qDebug() << ValueDecoder::Decode(boardelements[id].action, value);
+void Board::changeSerialSettings(){
+    serial->setBaudRate(p_toolbar->getBaud());
+    serial->setPort(p_toolbar->getPort());
 }
 
 void Board::update(){
