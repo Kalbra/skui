@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "board.h"
+#include "../toolbar/toolbar.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -33,7 +34,11 @@ private slots:
     void on_boards_tabCloseRequested(int index);
 
 private:
+    Toolbar *p_toolbar;
+
     Ui::MainWindow *ui;
+
+
 
 };
 #endif // MAINWINDOW_H

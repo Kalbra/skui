@@ -38,12 +38,14 @@ MainWindow::MainWindow(QWidget *parent)
     //View
     connect(ui->actionReload, &QAction::triggered, this, &MainWindow::on_reload_triggered);
 
-    voidboard.setup();
+    p_toolbar = new Toolbar();
+
+    ui->boards->setCornerWidget(p_toolbar->getToolbar(), Qt::TopRightCorner);
+
+    voidboard.setup(p_toolbar);
     currentboard = &voidboard;
 
-    Toolbar *toolbar = new Toolbar();
 
-    ui->boards->setCornerWidget(toolbar->getToolbar(), Qt::TopRightCorner);
 }
 
 MainWindow::~MainWindow(){
@@ -61,7 +63,7 @@ void MainWindow::on_open_triggered(){
     Board *board = new Board();
     currentboard = board;
 
-    board->setup();
+    board->setup(p_toolbar);
 
     QString url = OpenFileDialog(this);
     if(url != ""){

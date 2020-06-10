@@ -4,7 +4,7 @@
 #include <QtSerialPort/QSerialPortInfo>
 #include <QtSerialPort/QSerialPort>
 
-Serialio::Serialio(QString port, int baudrate = 9600){                //Klass Constructur der den Port braucht und die Baudrate(nicht Verflichtend Standardwert: 9600)
+Serialio::Serialio(QString port, int baudrate){                //Klass Constructur der den Port braucht und die Baudrate(nicht Verflichtend Standardwert: 9600)
     p_port     = port;                                                //Übergibt den port in die privatevalue p_port
     p_baudrate = baudrate;                                            //Übergibt den baudrate in die privatevalue p_baudrate
 }
