@@ -3,8 +3,8 @@
 
 #include <QMainWindow>
 
-#include "../filebar/filebar.h"
 #include "board.h"
+#include "../toolbar/toolbar.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,8 +22,9 @@ public:
 
     void on_new_triggered();
     void on_open_triggered();
+    void on_reload_triggered();
 
-    void on_button_triggered();
+    void on_boardeditor_triggered();
 
     void on_slider_triggered();
 
@@ -33,10 +34,9 @@ private slots:
     void on_boards_tabCloseRequested(int index);
 
 private:
+    Toolbar *p_toolbar;
+
     Ui::MainWindow *ui;
-
-    Filebar *filebar;
-
 
 
 

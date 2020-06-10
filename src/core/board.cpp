@@ -2,14 +2,27 @@
 #include "mainwindow.h"
 #include "../fileio/fileio.h"
 #include "../saveengine/saveengine.h"
+#include "../serialio/serialio.h"
+#include "../boardelements/boardelements.h"
+#include "../valuedecoder/valuedecoder.h"
+#include "../toolbar/toolbar.h"
 
 #include <QJsonDocument>
+#include <QObject>
 #include <QPushButton>
 #include <QSlider>
 #include <QLabel>
 
-void Board::setup(){
-    board = new QWidget();
+
+
+void Board::setup(Toolbar *toolbar){
+    board  = new QWidget();
+    serial = new Serialio("/dev/ttyUSB0", 9600);
+    p_toolbar = toolbar;
+
+    connect(p_toolbar, SIGNAL(settingsChanged()), this, SLOT(changeSerialSettings()));
+
+    changeSerialSettings();
 }
 
 void Board::setFile(QString path){
@@ -25,8 +38,13 @@ QWidget *Board::getBoard(){
     return board;
 }
 
-void Board::PrintSerialById(int id){
-    qDebug() << boardelements[id].name;
+void Board::PrintSerialById(int id, int value = 0){
+    serial->send(ValueDecoder::Decode(boardelements[id].action, value));
+}
+
+void Board::changeSerialSettings(){
+    serial->setBaudRate(p_toolbar->getBaud());
+    serial->setPort(p_toolbar->getPort());
 }
 
 void Board::update(){
@@ -53,6 +71,8 @@ void Board::update(){
             button->setGeometry(xbefor, ybefor, 100, 100);
             button->setText(boardelement.name);
 
+            connect(button, &QPushButton::clicked, this, [=]{ PrintSerialById(i); });
+
             button->show();
 
             xbefor = xbefor + 100;
@@ -60,6 +80,9 @@ void Board::update(){
         else if(eventtype == "slider"){
             QSlider *slider = new QSlider(board);
             slider->setGeometry(xbefor, ybefor, 100, 100);
+            slider->setRange(boardelement.from, boardelement.to);
+
+            connect(slider, &QAbstractSlider::sliderMoved, this, [=] {PrintSerialById(i, slider->value());});
 
             slider->show();
 

@@ -3,14 +3,18 @@
 #include "../boardelements/boardelements.h"
 #include "board.h"
 #include "../filenameengine/filenameengine.h"
-#include "../filebar/filebar.h"
 #include "../fileio/filedialog.h"
 #include "../fileio/fileio.h"
+#include "../boardeditor/boardeditor.h"
+#include "../toolbar/toolbar.h"
 
 #include <QtCore>
 #include <QDockWidget>
 #include <vector>
 #include <QPushButton>
+#include <QWidget>
+#include <QLabel>
+
 
 Filenameengine filenameengine;
 
@@ -23,15 +27,25 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    filebar = new Filebar();
-
+    //File
     connect(ui->actionNew,    &QAction::triggered, this, &MainWindow::on_new_triggered);
     connect(ui->actionOpen,   &QAction::triggered, this, &MainWindow::on_open_triggered);
-    connect(ui->actionButton, &QAction::triggered, this, &MainWindow::on_button_triggered);
+
+    //Edit
+    connect(ui->actionBoardeditor, &QAction::triggered, this, &MainWindow::on_boardeditor_triggered);
     connect(ui->actionSlider, &QAction::triggered, this, &MainWindow::on_slider_triggered);
 
-    voidboard.setup();
+    //View
+    connect(ui->actionReload, &QAction::triggered, this, &MainWindow::on_reload_triggered);
+
+    p_toolbar = new Toolbar();
+
+    ui->boards->setCornerWidget(p_toolbar->getToolbar(), Qt::TopRightCorner);
+
+    voidboard.setup(p_toolbar);
     currentboard = &voidboard;
+
+
 }
 
 MainWindow::~MainWindow(){
@@ -40,20 +54,31 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::on_new_triggered(){
-
+    Boardeditor *boardeditor = new Boardeditor();
+    ui->boards->addTab(boardeditor->getBoardeditor(), "New...");
+    ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
 }
 
 void MainWindow::on_open_triggered(){
     Board *board = new Board();
     currentboard = board;
 
-    board->setup();
+    board->setup(p_toolbar);
 
     QString url = OpenFileDialog(this);
-    filenameengine.Setnewfile(url);
-    board->setFile(filenameengine.currentboard);
+    if(url != ""){
+        filenameengine.Setnewfile(url);
+        board->setFile(filenameengine.currentboard);
 
-    ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
+        ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
+        ui->boards->setCurrentWidget(board->getBoard());
+
+        currentboard->update();
+    }
+}
+
+void MainWindow::on_reload_triggered(){
+    currentboard->setFile(filenameengine.currentboard);
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event)
@@ -62,8 +87,14 @@ void MainWindow::resizeEvent(QResizeEvent* event)
    currentboard->update();
 }
 
-void MainWindow::on_button_triggered(){
-
+void MainWindow::on_boardeditor_triggered(){
+    if(filenameengine.currentboard != ""){
+        Boardeditor *boardeditor = new Boardeditor();
+        boardeditor->setFile(filenameengine.currentboard);
+        boardeditor->loadFile();
+        ui->boards->addTab(boardeditor->getBoardeditor(), filenameengine.currentboard);
+        ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
+    }
 }
 
 void MainWindow::on_slider_triggered(){

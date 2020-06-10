@@ -34,8 +34,18 @@ add_executable(skui
   src/core/mainwindow.h
   src/core/mainwindow.ui
 
+  src/boardeditor/boardeditor.cpp
+  src/boardeditor/boardeditor.h
+
+  src/boardeditor/dialog/adddialog.cpp
+  src/boardeditor/dialog/adddialog.h
+  src/boardeditor/dialog/adddialog.ui
+
   src/core/board.cpp
   src/core/board.h
+
+  src/valuedecoder/valuedecoder.cpp
+  src/valuedecoder/valuedecoder.h
 
   src/fileio/fileio.h
   src/fileio/fileio.cpp
@@ -43,17 +53,15 @@ add_executable(skui
   src/serialio/serialio.h
   src/serialio/serialio.cpp
 
-  src/filebar/filebar.cpp
-  src/filebar/filebar.h
-
   src/saveengine/saveengine.cpp
   src/saveengine/saveengine.h
+
+  src/toolbar/toolbar.cpp
+  src/toolbar/toolbar.h
 
   src/fileio/filedialog.h
 
   src/filenameengine/filenameengine.h
-
-  src/settings/settingstruct.h
 
   src/boardelements/boardelements.h
 )
