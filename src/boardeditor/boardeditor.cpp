@@ -116,7 +116,7 @@ void Boardeditor::on_delete_clicked(){
 void Boardeditor::on_save_clicked(){
     std::vector<Boardelement> boardelements;
    for(int i = 0; i < eventtree->topLevelItemCount(); i++){
-        QTreeWidgetItem item = *eventtree->takeTopLevelItem(i);
+        QTreeWidgetItem *item = eventtree->
 
 //        Boardelement boardelement;
 //        boardelement.type = item.text(0);

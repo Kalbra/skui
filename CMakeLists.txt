@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+﻿cmake_minimum_required(VERSION 3.5)
 
 project(skui
     VERSION 0.6
@@ -64,6 +64,48 @@ add_executable(skui
   src/filenameengine/filenameengine.h
 
   src/boardelements/boardelements.h
+
+
+  src/dock/ads_globals.cpp
+  src/dock/DockAreaTabBar.cpp
+  src/dock/DockAreaTitleBar.cpp
+  src/dock/DockAreaWidget.cpp
+  src/dock/DockContainerWidget.cpp
+  src/dock/DockManager.cpp
+  src/dock/DockOverlay.cpp
+  src/dock/DockSplitter.cpp
+  src/dock/DockWidget.cpp
+  src/dock/DockWidgetTab.cpp
+  src/dock/DockingStateReader.cpp
+  src/dock/DockFocusController.cpp
+  src/dock/ElidingLabel.cpp
+  src/dock/FloatingDockContainer.cpp
+  src/dock/FloatingDragPreview.cpp
+  src/dock/IconProvider.cpp
+  src/dock/DockComponentsFactory.cpp
+  src/dock/ads.qrc
+
+  src/dock/ads_globals.h
+  src/dock/DockAreaTabBar.h
+  src/dock/DockAreaTitleBar.h
+  src/dock/DockAreaTitleBar_p.h
+  src/dock/DockAreaWidget.h
+  src/dock/DockContainerWidget.h
+  src/dock/DockManager.h
+  src/dock/DockOverlay.h
+  src/dock/DockSplitter.h
+  src/dock/DockWidget.h
+  src/dock/DockWidgetTab.h
+  src/dock/DockingStateReader.h
+  src/dock/DockFocusController.h
+  src/dock/ElidingLabel.h
+  src/dock/FloatingDockContainer.h
+  src/dock/FloatingDragPreview.h
+  src/dock/IconProvider.h
+  src/dock/DockComponentsFactory.h
+
+  src/dock/linux/FloatingWidgetTitleBar.cpp
+  src/dock/linux/FloatingWidgetTitleBar.h
 )
 
 target_link_libraries(skui PRIVATE
