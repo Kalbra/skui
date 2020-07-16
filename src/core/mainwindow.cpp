@@ -7,6 +7,8 @@
 #include "../fileio/fileio.h"
 #include "../boardeditor/boardeditor.h"
 #include "../toolbar/toolbar.h"
+#include "../dock/DockManager.h"
+#include "../welcome/welcome.h"
 
 #include <QtCore>
 #include <QDockWidget>
@@ -46,6 +48,18 @@ MainWindow::MainWindow(QWidget *parent)
     currentboard = &voidboard;
 
 
+     //Fügt die Toolbar hinzu
+     CDockWidget *toolbar = new CDockWidget("Toolbar");
+     toolbar->setWidget(p_toolbar->getToolbar());
+     toolbar->resize(toolbar->width(), 10);
+
+     m_DockManager->addDockWidget(TopDockWidgetArea, toolbar);
+
+     CDockWidget *welcome = new CDockWidget("Welcome");
+    welcome->setWidget(WelcomeMessage());
+
+    m_DockManager->addDockWidget(TopDockWidgetArea, welcome);
+
 }
 
 MainWindow::~MainWindow(){
@@ -55,8 +69,16 @@ MainWindow::~MainWindow(){
 
 void MainWindow::on_new_triggered(){
     Boardeditor *boardeditor = new Boardeditor();
-    ui->boards->addTab(boardeditor->getBoardeditor(), "New...");
-    ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
+
+    qDebug() << "rsalkjdf";
+
+    CDockWidget *dockwidget = new CDockWidget("New ...");
+    dockwidget->setWidget(boardeditor->getBoardeditor());
+
+//    ui->boards->addTab(boardeditor->getBoardeditor(), "New...");
+//    ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
+
+    m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
 }
 
 void MainWindow::on_open_triggered(){
@@ -65,13 +87,19 @@ void MainWindow::on_open_triggered(){
 
     board->setup(p_toolbar);
 
-    QString url = OpenFileDialog(this);
+    QString url = FileDialog::OpenFileDialog(this);
+    qDebug() << "1";
     if(url != ""){
         filenameengine.Setnewfile(url);
         board->setFile(filenameengine.currentboard);
 
         ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
         ui->boards->setCurrentWidget(board->getBoard());
+
+        m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
+
+//        ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
+//        ui->boards->setCurrentWidget(board->getBoard());
 
         currentboard->update();
     }
