@@ -24,7 +24,11 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "CPACK_PACKAGE_DESCRIPTION_SUMMARY")
 set(CPACK_PACKAGE_HOMEPAGE_URL "https://kalbra.github.io/skui/")
 
 
-find_package(Qt5 COMPONENTS Widgets SerialPort REQUIRED)
+find_package(Qt5 COMPONENTS
+    Widgets
+    SerialPort
+    WebEngineWidgets
+    REQUIRED)
 
 
 add_executable(skui
@@ -65,6 +69,12 @@ add_executable(skui
 
   src/boardelements/boardelements.h
 
+<<<<<<< HEAD
+=======
+  src/welcome/welcome.h
+  src/welcome/welcome.html
+
+>>>>>>> master
 
   src/dock/ads_globals.cpp
   src/dock/DockAreaTabBar.cpp
@@ -111,6 +121,7 @@ add_executable(skui
 target_link_libraries(skui PRIVATE
     Qt5::Widgets
     Qt5::SerialPort
+    Qt5::WebEngineWidgets
 )
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "bin" COMPONENT application)

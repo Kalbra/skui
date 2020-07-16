@@ -7,6 +7,8 @@
 #include "../fileio/fileio.h"
 #include "../boardeditor/boardeditor.h"
 #include "../toolbar/toolbar.h"
+#include "../dock/DockManager.h"
+#include "../welcome/welcome.h"
 
 #include <QtCore>
 #include <QDockWidget>
@@ -47,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
 
      m_DockManager = new CDockManager(this);
 
+<<<<<<< HEAD
      CDockWidget *dockwidget = new CDockWidget("Hello");
      dockwidget->setWidget(p_toolbar->getToolbar());
 
@@ -55,6 +58,20 @@ MainWindow::MainWindow(QWidget *parent)
 
      m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
      m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget2);
+=======
+     //Fügt die Toolbar hinzu
+     CDockWidget *toolbar = new CDockWidget("Toolbar");
+     toolbar->setWidget(p_toolbar->getToolbar());
+     toolbar->resize(toolbar->width(), 10);
+
+     m_DockManager->addDockWidget(TopDockWidgetArea, toolbar);
+
+     CDockWidget *welcome = new CDockWidget("Welcome");
+    welcome->setWidget(WelcomeMessage());
+
+    m_DockManager->addDockWidget(TopDockWidgetArea, welcome);
+
+>>>>>>> master
 }
 
 MainWindow::~MainWindow(){
@@ -91,6 +108,11 @@ void MainWindow::on_open_triggered(){
 
         CDockWidget *dockwidget = new CDockWidget(filenameengine.currentboard);
         dockwidget->setWidget(currentboard->getBoard());
+
+        m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
+
+//        ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
+//        ui->boards->setCurrentWidget(board->getBoard());
 
         m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
 
