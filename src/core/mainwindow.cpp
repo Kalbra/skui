@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "../boardelements/boardelements.h"
 #include "board.h"
@@ -15,6 +15,7 @@
 #include <QWidget>
 #include <QLabel>
 
+using namespace ads;
 
 Filenameengine filenameengine;
 
@@ -40,12 +41,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     p_toolbar = new Toolbar();
 
-    ui->boards->setCornerWidget(p_toolbar->getToolbar(), Qt::TopRightCorner);
 
     voidboard.setup(p_toolbar);
     currentboard = &voidboard;
 
+     m_DockManager = new CDockManager(this);
 
+     CDockWidget *dockwidget = new CDockWidget("Hello");
+     dockwidget->setWidget(p_toolbar->getToolbar());
+
+     CDockWidget *dockwidget2 = new CDockWidget("Hello");
+     dockwidget->setWidget(p_toolbar->getToolbar());
+
+     m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
+     m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget2);
 }
 
 MainWindow::~MainWindow(){
@@ -55,8 +64,16 @@ MainWindow::~MainWindow(){
 
 void MainWindow::on_new_triggered(){
     Boardeditor *boardeditor = new Boardeditor();
-    ui->boards->addTab(boardeditor->getBoardeditor(), "New...");
-    ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
+
+    qDebug() << "rsalkjdf";
+
+    CDockWidget *dockwidget = new CDockWidget("New ...");
+    dockwidget->setWidget(boardeditor->getBoardeditor());
+
+//    ui->boards->addTab(boardeditor->getBoardeditor(), "New...");
+//    ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
+
+    m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
 }
 
 void MainWindow::on_open_triggered(){
@@ -65,15 +82,23 @@ void MainWindow::on_open_triggered(){
 
     board->setup(p_toolbar);
 
-    QString url = OpenFileDialog(this);
+    QString url = FileDialog::OpenFileDialog(this);
+    qDebug() << "1";
     if(url != ""){
         filenameengine.Setnewfile(url);
         board->setFile(filenameengine.currentboard);
+        qDebug() << "2";
 
-        ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
-        ui->boards->setCurrentWidget(board->getBoard());
+        CDockWidget *dockwidget = new CDockWidget(filenameengine.currentboard);
+        dockwidget->setWidget(currentboard->getBoard());
+
+        m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
+
+//        ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
+//        ui->boards->setCurrentWidget(board->getBoard());
 
         currentboard->update();
+
     }
 }
 
@@ -88,12 +113,19 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 }
 
 void MainWindow::on_boardeditor_triggered(){
+
     if(filenameengine.currentboard != ""){
         Boardeditor *boardeditor = new Boardeditor();
         boardeditor->setFile(filenameengine.currentboard);
         boardeditor->loadFile();
-        ui->boards->addTab(boardeditor->getBoardeditor(), filenameengine.currentboard);
-        ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
+
+//        CDockWidget *dockwidget = new CDockWidget(filenameengine.currentboard);
+//        dockwidget->setWidget(currentboard->getBoard());
+
+//        m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
+
+//        ui->boards->addTab(boardeditor->getBoardeditor(), filenameengine.currentboard);
+//        ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
     }
 }
 
@@ -102,5 +134,5 @@ void MainWindow::on_slider_triggered(){
 }
 
 void MainWindow::on_boards_tabCloseRequested(int index){
-    ui->boards->removeTab(index);
+    //ui->boards->removeTab(index);
 }
