@@ -6,25 +6,19 @@
 #include <QFileInfo>
 #include <QWebEngineView>
 #include <QVBoxLayout>
+#include <QObject>
+#include <QMainWindow>
 
-QWidget *WelcomeMessage(){
-    QWidget *widget = new QWidget();
+class Welcome : public QObject
+{
+    Q_OBJECT
 
-    QWebEngineView *webengine = new QWebEngineView(widget);
+public:
 
-    QVBoxLayout *layout = new QVBoxLayout(widget);
-    layout->setMargin(0);
-    layout->addWidget(webengine);
+    static QWidget *WelcomeMessage(QMainWindow *window);
 
+};
 
-
-
-    webengine->load(QUrl::fromLocalFile(QFileInfo("welcome.html").absoluteFilePath()));
-
-    qDebug() << QUrl::fromLocalFile(QFileInfo("./welcome.html").absoluteFilePath());
-
-    return widget;
-}
 
 
 

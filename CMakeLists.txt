@@ -69,12 +69,10 @@ add_executable(skui
 
   src/boardelements/boardelements.h
 
-<<<<<<< HEAD
-=======
   src/welcome/welcome.h
   src/welcome/welcome.html
-
->>>>>>> master
+  src/welcome/welcome.cpp
+  src/welcome/welcome.qrc
 
   src/dock/ads_globals.cpp
   src/dock/DockAreaTabBar.cpp
