@@ -1,10 +1,10 @@
 ---
 name: Userquestion
 about: Any questions
-title: Question
+title: Your question shortly
 labels: question
 assignees: ''
 
 ---
 
-Write your question here
+Write here your question in detail
