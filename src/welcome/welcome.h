@@ -16,16 +16,9 @@ QWidget *WelcomeMessage(){
     layout->setMargin(0);
     layout->addWidget(webengine);
 
-
-
-
-    webengine->load(QUrl::fromLocalFile(QFileInfo("welcome.html").absoluteFilePath()));
-
-    qDebug() << QUrl::fromLocalFile(QFileInfo("./welcome.html").absoluteFilePath());
+    webengine->setUrl(QUrl("qrc:/html/welcome.html"));
 
     return widget;
 }
-
-
 
 #endif // WELCOME_H
