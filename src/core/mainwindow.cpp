@@ -49,16 +49,6 @@ MainWindow::MainWindow(QWidget *parent)
 
      m_DockManager = new CDockManager(this);
 
-<<<<<<< HEAD
-     CDockWidget *dockwidget = new CDockWidget("Hello");
-     dockwidget->setWidget(p_toolbar->getToolbar());
-
-     CDockWidget *dockwidget2 = new CDockWidget("Hello");
-     dockwidget->setWidget(p_toolbar->getToolbar());
-
-     m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
-     m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget2);
-=======
      //Fügt die Toolbar hinzu
      CDockWidget *toolbar = new CDockWidget("Toolbar");
      toolbar->setWidget(p_toolbar->getToolbar());
@@ -71,7 +61,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_DockManager->addDockWidget(TopDockWidgetArea, welcome);
 
->>>>>>> master
 }
 
 MainWindow::~MainWindow(){
