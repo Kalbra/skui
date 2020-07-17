@@ -1,7 +1,8 @@
-#include "boardeditor.h"
+﻿#include "boardeditor.h"
 #include "dialog/adddialog.h"
 #include "../boardelements/boardelements.h"
 #include "../saveengine/saveengine.h"
+#include "../fileio/filedialog.h"
 
 #include <QWidget>
 #include <QPushButton>
@@ -19,9 +20,9 @@ Boardeditor::Boardeditor(){
     QPushButton *delete_   = new QPushButton("Delete");
     QPushButton *save      = new QPushButton("Save");
 
-    connect(add, SIGNAL(clicked()), this, SLOT(on_add_clicked()));
+    connect(add,     SIGNAL(clicked()), this, SLOT(on_add_clicked()));
     connect(delete_, SIGNAL(clicked()), this, SLOT(on_delete_clicked()));
-    connect(save, SIGNAL(clicked()), this, SLOT(on_save_clicked()));
+    connect(save,    SIGNAL(clicked()), this, SLOT(on_save_clicked()));
 
 
     eventtree = new QTreeWidget();
@@ -95,7 +96,7 @@ void Boardeditor::loadFile(){
 }
 
 void Boardeditor::saveFile(){
-
+    qDebug() << "save";
 }
 
 void Boardeditor::on_add_clicked(){
@@ -115,13 +116,13 @@ void Boardeditor::on_delete_clicked(){
 
 void Boardeditor::on_save_clicked(){
     std::vector<Boardelement> boardelements;
-    for(int i = 0; i < eventtree->topLevelItemCount(); i++){
+   for(int i = 0; i < eventtree->topLevelItemCount(); i++){
         QTreeWidgetItem *item = eventtree->takeTopLevelItem(i);
 
         Boardelement boardelement;
         boardelement.type = item->text(0);
 
-        //qDebug() << item->child(0)->text(0);
+        qDebug() << item->child(0)->text(0);
 
         boardelement.action = item->child(0)->text(0);
         boardelement.name = item->child(1)->text(0);
@@ -131,10 +132,13 @@ void Boardeditor::on_save_clicked(){
             boardelement.to   = item->child(3)->text(0).toInt();
         }
         boardelements.push_back(boardelement);
-        eventtree->addTopLevelItem(item);
+        //eventtree->addTopLevelItem(item);
     }
+
+
+
     Saveengine saveengine;
-    saveengine.SaveToFile(p_path, boardelements);
+    saveengine.SaveToFile(FileDialog::SaveFileDialog(p_boardeditor), boardelements);
 }
 
 QWidget *Boardeditor::getBoardeditor(){
