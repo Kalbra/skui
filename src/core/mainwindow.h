@@ -1,10 +1,11 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
 
 #include "board.h"
 #include "../toolbar/toolbar.h"
+#include "../dock/DockManager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -37,6 +38,8 @@ private:
     Toolbar *p_toolbar;
 
     Ui::MainWindow *ui;
+
+    ads::CDockManager* m_DockManager;
 
 
 
