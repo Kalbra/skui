@@ -36,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Edit
     connect(ui->actionBoardeditor, &QAction::triggered, this, &MainWindow::on_boardeditor_triggered);
-    connect(ui->actionSlider, &QAction::triggered, this, &MainWindow::on_slider_triggered);
 
     //View
     connect(ui->actionReload, &QAction::triggered, this, &MainWindow::on_reload_triggered);
@@ -44,72 +43,81 @@ MainWindow::MainWindow(QWidget *parent)
     p_toolbar = new Toolbar();
 
 
+    //Write a emty board in currentboard provent crashes
     voidboard.setup(p_toolbar);
     currentboard = &voidboard;
 
+    //Init the Dockmanager
      m_DockManager = new CDockManager(this);
 
-     //Fügt die Toolbar hinzu
+     //Adds a toolbar
      CDockWidget *toolbar = new CDockWidget("Toolbar");
      toolbar->setWidget(p_toolbar->getToolbar());
-     toolbar->resize(toolbar->width(), 10);
+     toolbar->resize(toolbar->width(), 20);
 
      m_DockManager->addDockWidget(TopDockWidgetArea, toolbar);
 
-     CDockWidget *welcome = new CDockWidget("Welcome");
-    welcome->setWidget(WelcomeMessage());
+     DockWidgetArea *mainarea = new DockWidgetArea();
 
-    m_DockManager->addDockWidget(TopDockWidgetArea, welcome);
+
+
+     CDockWidget *welcome = new CDockWidget("Welcome");
+    welcome->setWidget(Welcome::WelcomeMessage(this));
+
+    CDockWidget *test = new CDockWidget("klj");
+    test->setWidget(Welcome::WelcomeMessage(this));
+
+    m_DockManager->addDockWidget(BottomDockWidgetArea, welcome);
+//    m_DockManager->addDockWidgetTab(*mainarea, welcome);
+//    m_DockManager->addDock
 
 }
 
 MainWindow::~MainWindow(){
+    //Saves the filenames before quit the application
     filenameengine.Savefilenames();
     delete ui;
 }
 
+
 void MainWindow::on_new_triggered(){
+    //Init a new Boardeditor
     Boardeditor *boardeditor = new Boardeditor();
 
-    qDebug() << "rsalkjdf";
-
+    //Add the Boardeditor to the docksystem
     CDockWidget *dockwidget = new CDockWidget("New ...");
     dockwidget->setWidget(boardeditor->getBoardeditor());
-
-//    ui->boards->addTab(boardeditor->getBoardeditor(), "New...");
-//    ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
-
-    m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
+    m_DockManager->addDockWidget(BottomDockWidgetArea, dockwidget);
 }
 
 void MainWindow::on_open_triggered(){
+    //Creates a board
     Board *board = new Board();
+    //Set the currentboard
     currentboard = board;
 
+    //Run the setup process
     board->setup(p_toolbar);
 
+    //Making a filedialog for the files to be opened
     QString url = FileDialog::OpenFileDialog(this);
-    qDebug() << "1";
-    if(url != ""){
-        filenameengine.Setnewfile(url);
-        board->setFile(filenameengine.currentboard);
-        qDebug() << "2";
 
+    //Ignore canceling
+    if(url != ""){
+        //Tells to the filenameengine the new filename
+        filenameengine.Setnewfile(url);
+
+        //Sets the file
+        board->setFile(filenameengine.currentboard);
+
+        //Add the Board to the docksystem
         CDockWidget *dockwidget = new CDockWidget(filenameengine.currentboard);
         dockwidget->setWidget(currentboard->getBoard());
 
-        m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
+        m_DockManager->addDockWidget(BottomDockWidgetArea, dockwidget);
 
-//        ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
-//        ui->boards->setCurrentWidget(board->getBoard());
-
-        m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
-
-//        ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
-//        ui->boards->setCurrentWidget(board->getBoard());
-
+        //Updates (in this case init) the currentboard
         currentboard->update();
-
     }
 }
 
@@ -138,12 +146,4 @@ void MainWindow::on_boardeditor_triggered(){
 //        ui->boards->addTab(boardeditor->getBoardeditor(), filenameengine.currentboard);
 //        ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
     }
-}
-
-void MainWindow::on_slider_triggered(){
-
-}
-
-void MainWindow::on_boards_tabCloseRequested(int index){
-    //ui->boards->removeTab(index);
 }
