@@ -62,10 +62,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 
      CDockWidget *welcome = new CDockWidget("Welcome");
-    welcome->setWidget(Welcome::WelcomeMessage(this));
 
-    CDockWidget *test = new CDockWidget("klj");
-    test->setWidget(Welcome::WelcomeMessage(this));
+     Welcome welcomemsg;
+
+    welcome->setWidget(welcomemsg.engine());
+
 
     m_DockManager->addDockWidget(BottomDockWidgetArea, welcome);
 //    m_DockManager->addDockWidgetTab(*mainarea, welcome);
