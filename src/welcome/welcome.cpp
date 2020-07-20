@@ -1,26 +1,30 @@
 ﻿#include "welcome.h"
 #include <QWidget>
-#include <QUrl>
-#include <QFileInfo>
 #include <QWebEngineView>
+#include <QUrl>
 #include <QVBoxLayout>
-#include <QObject>
-#include <QMainWindow>
 
+Welcome::Welcome(QObject *parent) : QObject(parent){
 
-QWidget * Welcome::WelcomeMessage(QMainWindow *window){
+}
+
+QWidget *Welcome::engine(){
     QWidget *widget = new QWidget();
 
     QWebEngineView *webengine = new QWebEngineView(widget);
 
     webengine->setUrl(QUrl("qrc:/html/welcome.html"));
 
-    connect(webengine, SIGNAL(urlChanged(const QUrl &url)), window, SLOT([]{qDebug() << "lsdfjk";}));
-
+    qDebug() << connect(webengine, SIGNAL(urlChanged(const QUrl &)), this, SLOT(openlink(const QUrl &)));
 
     QVBoxLayout *layout = new QVBoxLayout(widget);
     layout->setMargin(0);
     layout->addWidget(webengine);
 
     return widget;
+}
+
+void Welcome::openlink(const QUrl &url){
+    qDebug() << "!";
+    qDebug() << url;
 }
