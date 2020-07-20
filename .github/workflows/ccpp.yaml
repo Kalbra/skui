@@ -1,20 +1,48 @@
+name: Test Installing Qt
 
-name: C/C++ with Make
-
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macOS-latest, ubuntu-latest, ubuntu-16.04]
+        version: ['5.9', '5.12.0', '5.15.0']
     steps:
-    - uses: actions/checkout@v1
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+
+      - name: "npm ci"
+        run: npm ci
+
+      - name: "npm run build"
+        run: npm run build
+
+      - name: Install Qt with options
+        uses: ./
+        with:
+          modules: 'qtcharts qtwebengine'
+          mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
+          extra: '--external 7z'
+          version: ${{ matrix.version }}
+
+      - name: Configure test project on windows
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          cd tests/TestWithModules
+          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          dir %Qt5_DIR%/lib/cmake
+          qmake
+        shell: cmd
+          
+      - name: Configure test project on unix
+        if: (!startsWith(matrix.os, 'windows'))
+        run: |
+          cd tests/TestWithModules
+          ls $Qt5_DIR/lib/cmake
+          qmake
+        shell: bash
