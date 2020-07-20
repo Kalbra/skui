@@ -54,3 +54,17 @@ compile_commands.json
 *_qmlcache.qrc
 
 .idea/
+
+CMakeFiles/
+
+cmake_install.cmake
+
+CPackConfig.cmake
+
+CPackSourceConfig.cmake
+
+skui_autogen/
+
+skui
+
+CMakeCache.txt
