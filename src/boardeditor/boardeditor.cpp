@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QTreeWidget>
+#include <QTreeWidgetItem>
 #include <QDebug>
 
 Boardeditor::Boardeditor(){
@@ -95,10 +96,6 @@ void Boardeditor::loadFile(){
     }
 }
 
-void Boardeditor::saveFile(){
-    qDebug() << "save";
-}
-
 void Boardeditor::on_add_clicked(){
     Boardelement *boardelement = new Boardelement();
     Adddialog adddialog(boardelement);
@@ -117,12 +114,12 @@ void Boardeditor::on_delete_clicked(){
 void Boardeditor::on_save_clicked(){
     std::vector<Boardelement> boardelements;
    for(int i = 0; i < eventtree->topLevelItemCount(); i++){
-        QTreeWidgetItem *item = eventtree->takeTopLevelItem(i);
+
+        QTreeWidgetItem *item = eventtree->topLevelItem(i);
 
         Boardelement boardelement;
         boardelement.type = item->text(0);
 
-        qDebug() << item->child(0)->text(0);
 
         boardelement.action = item->child(0)->text(0);
         boardelement.name = item->child(1)->text(0);
@@ -132,10 +129,7 @@ void Boardeditor::on_save_clicked(){
             boardelement.to   = item->child(3)->text(0).toInt();
         }
         boardelements.push_back(boardelement);
-        //eventtree->addTopLevelItem(item);
     }
-
-
 
     Saveengine saveengine;
     saveengine.SaveToFile(FileDialog::SaveFileDialog(p_boardeditor), boardelements);

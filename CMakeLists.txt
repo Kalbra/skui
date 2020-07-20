@@ -32,6 +32,8 @@ find_package(Qt5 COMPONENTS
 
 
 add_executable(skui
+   src/resources.qrc
+
   src/main.cpp
 
   src/core/mainwindow.cpp
@@ -70,9 +72,7 @@ add_executable(skui
   src/boardelements/boardelements.h
 
   src/welcome/welcome.h
-  src/welcome/welcome.html
   src/welcome/welcome.cpp
-  src/welcome/welcome.qrc
 
   src/dock/ads_globals.cpp
   src/dock/DockAreaTabBar.cpp
