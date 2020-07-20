@@ -6,11 +6,11 @@ A open source serial interface
 Skui is a program with which you can put serial commands on button and slider.
 This way you can easily make serial controls user friendly.
 
-###Build
+### Build
 Open the CMakeLists.txt in Qt Creator and compile.
 
 
-###Showcase
+### Showcase
 
 The panel to control under Kubuntu(Linux)
 ![Board under Kubuntu](docs/img/Board_Kubuntu.png)
