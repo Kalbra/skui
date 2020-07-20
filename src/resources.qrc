@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/html">
+        <file alias="welcome.html">welcome/welcome.html</file>
+    </qresource>
+    <qresource prefix="/qml">
+        <file alias="welcome.qml">welcome/welcome.qml</file>
+    </qresource>
+</RCC>
