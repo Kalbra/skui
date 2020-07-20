@@ -7,7 +7,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, ubuntu-18.04, ubuntu-16.04]
+        os: ubuntu-latest
 
     runs-on: ${{ matrix.os }}
     
@@ -15,7 +15,8 @@ jobs:
     - uses: actions/checkout@v1
     - name: install qt
       run: |
-        sudo apt-get update --fix-missing
+        sudo apt-get update
+        sudo apt-get upgrade -y
         sudo apt-get install qt5-default
         sudo apt-get install qtwebengine5-dev
         sudo apt-get install libqt5serialport5-dev
