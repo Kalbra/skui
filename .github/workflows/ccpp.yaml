@@ -1,48 +1,25 @@
-name: Test Installing Qt
 
-on: [push, pull_request]
+name: linux-builds
+
+on: [push]
 
 jobs:
-  test:
-    runs-on: ${{ matrix.os }}
+  build:
     strategy:
       matrix:
-        os: [windows-latest, macOS-latest, ubuntu-latest, ubuntu-16.04]
-        version: ['5.9', '5.12.0', '5.15.0']
+        os: [ubuntu-latest, ubuntu-18.04, ubuntu-16.04]
+
+    runs-on: ${{ matrix.os }}
+    
     steps:
-      - uses: actions/checkout@v1
-
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '10.x'
-
-      - name: "npm ci"
-        run: npm ci
-
-      - name: "npm run build"
-        run: npm run build
-
-      - name: Install Qt with options
-        uses: ./
-        with:
-          modules: 'qtcharts qtwebengine'
-          mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
-          extra: '--external 7z'
-          version: ${{ matrix.version }}
-
-      - name: Configure test project on windows
-        if: startsWith(matrix.os, 'windows')
-        run: |
-          cd tests/TestWithModules
-          call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          dir %Qt5_DIR%/lib/cmake
-          qmake
-        shell: cmd
-          
-      - name: Configure test project on unix
-        if: (!startsWith(matrix.os, 'windows'))
-        run: |
-          cd tests/TestWithModules
-          ls $Qt5_DIR/lib/cmake
-          qmake
-        shell: bash
+    - uses: actions/checkout@v1
+    - name: install qt
+      run: |
+        sudo apt-get update --fix-missing
+        sudo apt-get install qt5-default
+        sudo apt-get install qtwebengine5-dev
+        sudo apt-get install libqt5serialport5-dev
+    - name: cmake
+      run: cmake .
+    - name: make
+      run: make
