@@ -19,20 +19,20 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void LoadBoards();
-
+    //Trigger the Boardeditor to make a new board
     void on_new_triggered();
+
+    //Load a file by user filedialog
     void on_open_triggered();
+
+    //Reloads the current board
     void on_reload_triggered();
 
+    //Editmode for the current board
     void on_boardeditor_triggered();
 
-    void on_slider_triggered();
-
+    //On resize, the board will be updateing
     void resizeEvent(QResizeEvent*);
-
-private slots:
-    void on_boards_tabCloseRequested(int index);
 
 private:
     Toolbar *p_toolbar;
@@ -40,8 +40,6 @@ private:
     Ui::MainWindow *ui;
 
     ads::CDockManager* m_DockManager;
-
-
 
 };
 #endif // MAINWINDOW_H
