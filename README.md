@@ -1,4 +1,7 @@
 # Skui
+
+[![Actions Status](https://github.com/Kalbra/skui/workflows/linux-builds/badge.svg)](https://github.com/Kalbra/skui/actions)
+
 A open source serial interface
 
 
