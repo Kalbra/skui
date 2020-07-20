@@ -42,7 +42,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     p_toolbar = new Toolbar();
 
-
     //Write a emty board in currentboard provent crashes
     voidboard.setup(p_toolbar);
     currentboard = &voidboard;
@@ -53,7 +52,6 @@ MainWindow::MainWindow(QWidget *parent)
      //Adds a toolbar
      CDockWidget *toolbar = new CDockWidget("Toolbar");
      toolbar->setWidget(p_toolbar->getToolbar());
-     toolbar->resize(toolbar->width(), 20);
 
      m_DockManager->addDockWidget(TopDockWidgetArea, toolbar);
 
@@ -64,7 +62,6 @@ MainWindow::MainWindow(QWidget *parent)
     welcome->setWidget(welcomemsg.engine());
 
     m_DockManager->addDockWidget(BottomDockWidgetArea, welcome);
-
 }
 
 MainWindow::~MainWindow(){
@@ -72,7 +69,6 @@ MainWindow::~MainWindow(){
     filenameengine.Savefilenames();
     delete ui;
 }
-
 
 void MainWindow::on_new_triggered(){
     //Init a new Boardeditor
