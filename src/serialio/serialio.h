@@ -1,4 +1,4 @@
-#ifndef SERIALIO_H
+﻿#ifndef SERIALIO_H
 #define SERIALIO_H
 #include <QString>
 #include <QtSerialPort/QSerialPortInfo>
@@ -6,14 +6,19 @@
 class Serialio
 {
 public:
-    explicit Serialio(QString port = "/dev/ttyUSB0", int baudrate = 9600);                             //Klass Constructur der den Port braucht und die Baudrate(nicht Verflichtend Standardwert: 9600)
+    explicit Serialio(QString port = "/dev/ttyUSB0", int baudrate = 9600);
 
-    static QList<QSerialPortInfo> getPorts();                                //Funktion um die verfügbaren Ports in eine QList(Vector) zu schreiben, diese wird dann returnt
+    //Returns all available ports
+    static QList<QSerialPortInfo> getPorts();
 
-    void setPort(QString port);                                       //Funktion um den Port zu ändern
-    void setBaudRate(int baudrate);                                   //Funktion um die Baudrate zu setzen (oder zu ändern)
+    //Sets the Port
+    void setPort(QString port);
 
-    void send(QString str);                                           //Funktion um einen String zu senden
+    //Sets the Baudrate
+    void setBaudRate(int baudrate);
+
+    //Send a string with current settings
+    void send(QString str);
 
 private:
     QString p_port;

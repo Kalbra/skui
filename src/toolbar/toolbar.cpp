@@ -1,4 +1,4 @@
-#include "toolbar.h"
+﻿#include "toolbar.h"
 #include "../serialio/serialio.h"
 
 #include <QWidget>
@@ -13,6 +13,7 @@
 
 Toolbar::Toolbar(){
     p_toolbar = new QWidget();
+
     p_ports = new QComboBox(p_toolbar);
 
     p_baudratespinbox = new QSpinBox(p_toolbar);

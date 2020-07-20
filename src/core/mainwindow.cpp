@@ -36,80 +36,78 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Edit
     connect(ui->actionBoardeditor, &QAction::triggered, this, &MainWindow::on_boardeditor_triggered);
-    connect(ui->actionSlider, &QAction::triggered, this, &MainWindow::on_slider_triggered);
 
     //View
     connect(ui->actionReload, &QAction::triggered, this, &MainWindow::on_reload_triggered);
 
     p_toolbar = new Toolbar();
 
-
+    //Write a emty board in currentboard provent crashes
     voidboard.setup(p_toolbar);
     currentboard = &voidboard;
 
+    //Init the Dockmanager
      m_DockManager = new CDockManager(this);
 
-     //Fügt die Toolbar hinzu
+     //Adds a toolbar
      CDockWidget *toolbar = new CDockWidget("Toolbar");
      toolbar->setWidget(p_toolbar->getToolbar());
-     toolbar->resize(toolbar->width(), 10);
 
      m_DockManager->addDockWidget(TopDockWidgetArea, toolbar);
 
+
      CDockWidget *welcome = new CDockWidget("Welcome");
-    welcome->setWidget(WelcomeMessage());
 
-    m_DockManager->addDockWidget(TopDockWidgetArea, welcome);
+     Welcome welcomemsg;
+    welcome->setWidget(welcomemsg.engine());
 
+    m_DockManager->addDockWidget(BottomDockWidgetArea, welcome);
 }
 
 MainWindow::~MainWindow(){
+    //Saves the filenames before quit the application
     filenameengine.Savefilenames();
     delete ui;
 }
 
 void MainWindow::on_new_triggered(){
+    //Init a new Boardeditor
     Boardeditor *boardeditor = new Boardeditor();
 
-    qDebug() << "rsalkjdf";
-
+    //Add the Boardeditor to the docksystem
     CDockWidget *dockwidget = new CDockWidget("New ...");
     dockwidget->setWidget(boardeditor->getBoardeditor());
-
-//    ui->boards->addTab(boardeditor->getBoardeditor(), "New...");
-//    ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
-
-    m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
+    m_DockManager->addDockWidgetTab(BottomDockWidgetArea, dockwidget);
 }
 
 void MainWindow::on_open_triggered(){
+    //Creates a board
     Board *board = new Board();
+    //Set the currentboard
     currentboard = board;
 
+    //Run the setup process
     board->setup(p_toolbar);
 
+    //Making a filedialog for the files to be opened
     QString url = FileDialog::OpenFileDialog(this);
-    qDebug() << "1";
-    if(url != ""){
-        filenameengine.Setnewfile(url);
-        board->setFile(filenameengine.currentboard);
-        qDebug() << "2";
 
+    //Ignore canceling
+    if(url != ""){
+        //Tells to the filenameengine the new filename
+        filenameengine.Setnewfile(url);
+
+        //Sets the file
+        board->setFile(filenameengine.currentboard);
+
+        //Add the Board to the docksystem
         CDockWidget *dockwidget = new CDockWidget(filenameengine.currentboard);
         dockwidget->setWidget(currentboard->getBoard());
 
-        m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
+        m_DockManager->addDockWidgetTab(BottomDockWidgetArea, dockwidget);
 
-//        ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
-//        ui->boards->setCurrentWidget(board->getBoard());
-
-        m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
-
-//        ui->boards->addTab(board->getBoard(), filenameengine.currentboard);
-//        ui->boards->setCurrentWidget(board->getBoard());
-
+        //Updates (in this case init) the currentboard
         currentboard->update();
-
     }
 }
 
@@ -124,26 +122,18 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 }
 
 void MainWindow::on_boardeditor_triggered(){
-
+    //Ignore triggerring without file
     if(filenameengine.currentboard != ""){
+        //Making a Boardeditor
         Boardeditor *boardeditor = new Boardeditor();
         boardeditor->setFile(filenameengine.currentboard);
         boardeditor->loadFile();
 
-//        CDockWidget *dockwidget = new CDockWidget(filenameengine.currentboard);
-//        dockwidget->setWidget(currentboard->getBoard());
+        //Makeing a dock tab
+        CDockWidget *boardeditordock = new CDockWidget("Edit: "+ filenameengine.currentboard);
+        boardeditordock->setWidget(boardeditor->getBoardeditor());
 
-//        m_DockManager->addDockWidget(TopDockWidgetArea, dockwidget);
-
-//        ui->boards->addTab(boardeditor->getBoardeditor(), filenameengine.currentboard);
-//        ui->boards->setCurrentWidget(boardeditor->getBoardeditor());
+        //Add the tab to dockmanager
+        m_DockManager->addDockWidgetTab(BottomDockWidgetArea, boardeditordock);
     }
-}
-
-void MainWindow::on_slider_triggered(){
-
-}
-
-void MainWindow::on_boards_tabCloseRequested(int index){
-    //ui->boards->removeTab(index);
 }
