@@ -1,4 +1,4 @@
-# Skui
+# [Skui](https://kalbra.github.io/skui/)
 
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/Kalbra/skui?color=blueviolet&label=Version)
 [![License: GPL v3.0](https://img.shields.io/badge/License-GPL%20v3.0-blue.svg)](LICENSE)
